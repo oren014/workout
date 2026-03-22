@@ -3,16 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>תוכנית אימונים</title>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="אימונים">
+<meta name="apple-mobile-web-app-title" content="Workout">
 <meta name="theme-color" content="#0d1b2a">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1b2a'/%3E%3Crect x='15' y='45' width='70' height='10' rx='5' fill='%231D9E75'/%3E%3Crect x='10' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3Crect x='75' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3C/svg%3E'http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d1b2a'/><text y='.9em' font-size='80' x='10'>AW</text></svg>">
-<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Workout%22%2C%22short_name%22%3A%22Workout%22%2C%22start_url%22%3A%22%2Fworkout%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230d1b2a%22%2C%22theme_color%22%3A%22%230d1b2a%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%3Csvg+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+viewBox%3D%270+0+100+100%27%3E%3Crect+width%3D%27100%27+height%3D%27100%27+rx%3D%2720%27+fill%3D%27%230d1b2a%27%2F%3E%3Crect+x%3D%2715%27+y%3D%2745%27+width%3D%2770%27+height%3D%2710%27+rx%3D%275%27+fill%3D%27%231D9E75%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D"><rect width='100' height='100' rx='20' fill='%230d1b2a'/><text y='.9em' font-size='80' x='10'>AW</text></svg>%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22}]}">
+<title>תוכנית אימונים</title>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
+
 :root{--navy:#0d1b2a;--blue:#1a4f7a;--accent:#e8a020;--light:#f0f4f8;--white:#fff;--text:#1a2332;--muted:#6b7e94;--green:#1D9E75;--red:#c0392b}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Heebo',sans-serif;background:var(--light);color:var(--text);padding-bottom:3rem}
@@ -157,9 +156,11 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
 .att-mst{font-size:.72rem;color:var(--muted)}
 .att-leg{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;font-size:.68rem}
 .att-li{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:4px}
+
 </style>
 </head>
 <body>
+
 
 <div class="plov" id="plov">
   <div style="padding:20px;width:100%;max-width:360px;text-align:center">
@@ -1495,5 +1496,781 @@ document.addEventListener('visibilitychange', function() {
     <button onclick="installApp()" style="padding:8px 14px;border:none;border-radius:8px;background:#1D9E75;color:white;font-family:'Heebo',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer">&#x2B07; התקן</button>
   </div>
 </div>
+
 </body>
+<script>
+
+/* ===== WEIGHT TRACKER ===== */
+function wtInit() {
+  var data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04', log: [] };
+  if (!data.height) data.height = 175;
+  if (!data.dob)    data.dob    = '1990-09-04';
+  if (!data.log || data.log.length === 0) {
+    data.log = [{ date: '2026-03-22', weight: 103.5, note: 'משקל התחלתי' }];
+    lsSJ('wt', data);
+  }
+  wtRender(data);
+}
+
+function calcAge(dob) {
+  var d = new Date(dob), today = new Date();
+  var age = today.getFullYear() - d.getFullYear();
+  var m = today.getMonth() - d.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
+  return age;
+}
+
+function bmiCategory(bmi, age) {
+  if (bmi < 18.5) return { label: 'תת משקל', color: '#aed6f1' };
+  if (bmi < 25)   return { label: 'משקל תקין', color: '#5dd9a8' };
+  if (bmi < 27.5 && age >= 65) return { label: 'משקל תקין (גיל 65+)', color: '#5dd9a8' };
+  if (bmi < 30)   return { label: 'עודף משקל', color: '#f0c890' };
+  if (bmi < 35)   return { label: 'השמנה דרגה 1', color: '#f0a060' };
+  if (bmi < 40)   return { label: 'השמנה דרגה 2', color: '#e08050' };
+  return           { label: 'השמנה דרגה 3', color: '#c0392b' };
+}
+
+function wtRender(data) {
+  if (!data) data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04', log: [] };
+  var cur    = parseFloat(data.cur);
+  var goal   = parseFloat(data.goal);
+  var height = parseFloat(data.height || 175);
+  var dob    = data.dob || '1990-09-04';
+  var startWeight = data.log && data.log.length > 0 ? parseFloat(data.log[0].weight) : cur;
+
+  // Progress bar
+  var totalToLose = startWeight - goal;
+  var lost = startWeight - cur;
+  var pct  = totalToLose > 0 ? Math.max(0, Math.min(100, Math.round(lost / totalToLose * 100))) : 0;
+
+  var curEl  = document.getElementById('wt-cur-lbl');
+  var goalEl = document.getElementById('wt-goal-lbl');
+  var barEl  = document.getElementById('wt-bar');
+  var pctEl  = document.getElementById('wt-pct-lbl');
+  if (curEl)  curEl.textContent  = cur + ' ק"ג';
+  if (goalEl) goalEl.textContent = goal + ' ק"ג';
+  if (barEl)  barEl.style.width  = pct + '%';
+  if (pctEl)  pctEl.textContent  = pct + '% מהיעד (' + (cur > goal ? (cur - goal).toFixed(1) + ' ק"ג נותרו' : 'הגעת ליעד! ') + ')';
+
+  // Age
+  var age = calcAge(dob);
+  var ageLbl = document.getElementById('age-lbl');
+  if (ageLbl) ageLbl.textContent = age;
+
+  // BMI
+  var hm  = height / 100;
+  var bmi = cur / (hm * hm);
+  var cat = bmiCategory(bmi, age);
+  var bmiEl = document.getElementById('wt-bmi-badge');
+  if (bmiEl) {
+    bmiEl.textContent = 'BMI ' + bmi.toFixed(1) + ' — ' + cat.label;
+    bmiEl.style.background = cat.color;
+    bmiEl.style.color = (cat.color === '#5dd9a8' || cat.color === '#aed6f1') ? '#0d4a30' : '#fff';
+  }
+}
+
+function openWtEdit() {
+  var data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04' };
+  document.getElementById('wt-inp-cur').value    = data.cur;
+  document.getElementById('wt-inp-goal').value   = data.goal;
+  document.getElementById('wt-inp-height').value = data.height || 175;
+  document.getElementById('wt-inp-dob').value    = data.dob    || '1990-09-04';
+  document.getElementById('wt-edit-modal').style.display = 'flex';
+}
+function closeWtEdit() {
+  document.getElementById('wt-edit-modal').style.display = 'none';
+}
+
+function saveWt() {
+  var newCur    = parseFloat(document.getElementById('wt-inp-cur').value);
+  var newGoal   = parseFloat(document.getElementById('wt-inp-goal').value);
+  var newHeight = parseFloat(document.getElementById('wt-inp-height').value);
+  var newDob    = document.getElementById('wt-inp-dob').value;
+  if (isNaN(newCur)||isNaN(newGoal)||newCur<=0||newGoal<=0) { alert('הזן ערכים תקינים'); return; }
+  if (isNaN(newHeight)||newHeight<100||newHeight>250) { alert('הזן גובה תקין (ס"מ)'); return; }
+  if (!newDob) { alert('הזן תאריך לידה'); return; }
+  var data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04', log: [] };
+  if (!data.log) data.log = [];
+  var today = new Date();
+  var ds = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  var notes = [];
+  if (newGoal   !== parseFloat(data.goal))   notes.push('יעד: '+newGoal+' ק"ג');
+  if (newHeight !== parseFloat(data.height)) notes.push('גובה: '+newHeight+' ס"מ');
+  data.log.push({ date: ds, weight: newCur, note: notes.length ? notes.join(' | ') : 'עדכון' });
+  data.cur    = newCur;
+  data.goal   = newGoal;
+  data.height = newHeight;
+  data.dob    = newDob;
+  lsSJ('wt', data);
+  wtRender(data);
+  closeWtEdit();
+}
+
+function openWtHistory() {
+  var data = lsJ('wt') || { log: [] };
+  var list = document.getElementById('wt-hist-list');
+  if (!data.log || data.log.length === 0) {
+    list.innerHTML = '<div style="text-align:center;color:#8fa8c0;padding:1rem;font-size:.84rem">אין היסטוריה עדיין</div>';
+  } else {
+    var out = '';
+    var log = data.log.slice().reverse(); // newest first
+    for (var i = 0; i < log.length; i++) {
+      var e = log[i];
+      var dt = new Date(e.date);
+      var ds = DAYS[dt.getDay()] + ', ' + dt.getDate() + ' ' + MONTHS[dt.getMonth()] + ' ' + dt.getFullYear();
+      var isFirst = i === log.length - 1;
+      var diff = '';
+      if (!isFirst && i < log.length - 1) {
+        var prev = parseFloat(log[i+1].weight);
+        var delta = parseFloat(e.weight) - prev;
+        if (delta < 0) diff = '<span style="color:#1D9E75;font-weight:700"> (' + delta.toFixed(1) + ' ק"ג)</span>';
+        else if (delta > 0) diff = '<span style="color:#c0392b;font-weight:700"> (+' + delta.toFixed(1) + ' ק"ג)</span>';
+        else diff = '<span style="color:#6b7e94"> (ללא שינוי)</span>';
+      }
+      out += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4f8">';
+      out += '<div><div style="font-size:.78rem;font-weight:700;color:#1a2332">' + e.weight + ' ק"ג' + diff + '</div>';
+      out += '<div style="font-size:.65rem;color:#6b7e94">' + ds + (e.note ? ' &middot; ' + e.note : '') + '</div></div>';
+      if (isFirst) out += '<span style="font-size:.62rem;background:#e8f0fa;color:#1a4f7a;padding:2px 8px;border-radius:10px;font-weight:700">התחלה</span>';
+      out += '</div>';
+    }
+    list.innerHTML = out;
+  }
+  document.getElementById('wt-hist-modal').style.display = 'flex';
+}
+function closeWtHistory() {
+  document.getElementById('wt-hist-modal').style.display = 'none';
+}
+
+/* ===== DAILY TIPS (AI-powered) ===== */
+function showDailyTip() {
+  var txtEl   = document.getElementById('tip-text');
+  var badgeEl = document.getElementById('tip-badge');
+  var dateEl  = document.getElementById('tip-date');
+  if (!txtEl) return;
+
+  // Date display
+  var today  = new Date();
+  var days   = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+  var months = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  if (dateEl) dateEl.textContent = days[today.getDay()] + ', ' + today.getDate() + ' ' + months[today.getMonth()];
+
+  // Cache key: one tip per day
+  var cacheKey = 'tip_' + today.getFullYear() + '_' + today.getMonth() + '_' + today.getDate();
+  var cached   = lsJ(cacheKey);
+  if (cached) {
+    _renderTip(cached, badgeEl, txtEl);
+    return;
+  }
+
+  // Loading state
+  txtEl.textContent = 'טוען טיפ יומי...';
+  badgeEl.className = 'tip-badge fitness';
+  badgeEl.innerHTML = '&#x23F3; מרענן...';
+
+  // Pick category: alternate daily fitness/nutrition
+  var start2 = new Date(today.getFullYear(), 0, 0);
+  var dayOfYear = Math.floor((today - start2) / 86400000);
+  var category = dayOfYear % 2 === 0 ? 'כושר ואימון' : 'תזונה בריאה';
+  var catType  = dayOfYear % 2 === 0 ? 'fitness' : 'nutrition';
+
+  var userProfile = 'גבר, גיל 35, משקל 103.5 ק"ג, יעד 80 ק"ג. מתאמן 2 אימוני כוח + 2 ריצות אינטרוולים בשבוע. חזר לחדר כושר אחרי 3 שנים הפסקה.';
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 120,
+      system: 'אתה מאמן כושר ותזונה. השב טיפ יומי אחד בעברית בנושא ' + category + '. הטיפ צריך להיות: מעשי וספציפי, מותאם לפרופיל המתאמן (' + userProfile + '), בעברית שוטפת וישירה, לא יותר מ-2 משפטים. השב רק את הטיפ עצמו, ללא כותרת וללא הסבר.',
+      messages: [{ role: 'user', content: 'השב טיפ ' + category + ' ליום היום.' }]
+    })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    var tip = data.content && data.content[0] ? data.content[0].text.trim() : null;
+    if (!tip) throw new Error('no content');
+    var obj = { text: tip, type: catType };
+    lsSJ(cacheKey, obj);
+    _renderTip(obj, badgeEl, txtEl);
+  })
+  .catch(function(){
+    // Fallback if API fails
+    var fallbacks = [
+      { text: 'שינה של 7-9 שעות היא חלק בלתי נפרד מהתאוששות השריר — אל תקצץ בה.', type: 'fitness' },
+      { text: 'שתה 2-3 ליטר מים ביום. בימי אימון — הוסף 500 מ"ל נוספים.', type: 'nutrition' },
+      { text: 'עקביות לאורך זמן > תוכנית מושלמת לשבועיים.', type: 'fitness' }
+    ];
+    var obj = fallbacks[new Date().getDate() % fallbacks.length];
+    _renderTip(obj, badgeEl, txtEl);
+  });
+}
+
+function _renderTip(obj, badgeEl, txtEl) {
+  txtEl.textContent = obj.text;
+  var isFit = obj.type === 'fitness';
+  badgeEl.className = 'tip-badge ' + (isFit ? 'fitness' : 'nutrition');
+  badgeEl.innerHTML = isFit ? '&#x1F4AA; טיפ כושר' : '&#x1F955; טיפ תזונה';
+}
+
+/* ===== TABS ===== */
+function sw(i) {
+  for (var j=0;j<4;j++) { document.getElementById('s'+j).className='sec'; document.getElementById('t'+j).className='tab'; }
+  document.getElementById('s'+i).className='sec on';
+  document.getElementById('t'+i).className='tab on';
+  if (i===0) showDailyTip();
+  if (i===2) initRunTab();
+  if (i===3) { initTr(); swTr(0); }
+}
+
+/* ===== CARD ===== */
+function toggleCard(head) {
+  head.parentNode.classList.toggle('open');
+}
+
+/* ===== INFO ===== */
+function togI(id,btn) {
+  var b=document.getElementById(id);
+  b.classList.toggle('on');
+  btn.innerHTML=b.classList.contains('on')?'&#x2715; סגור':'&#x2139; מה זה?';
+}
+
+/* ===== GROUP ===== */
+function openGrp(gid,btn) {
+  var g=document.getElementById(gid);
+  var cards=g.querySelectorAll('.card');
+  var allOpen=true;
+  for (var i=0;i<cards.length;i++) if (cards[i].className.indexOf('open')<0) { allOpen=false; break; }
+  for (var i=0;i<cards.length;i++) {
+    if (allOpen) cards[i].className=cards[i].className.replace(' open','').replace('open','').trim();
+    else if (cards[i].className.indexOf('open')<0) cards[i].className+=' open';
+  }
+  btn.textContent=allOpen?'\u05e4\u05ea\u05d7 \u05d4\u05db\u05dc':'\u05e1\u05d2\u05d5\u05e8 \u05d4\u05db\u05dc';
+}
+
+/* ===== MANUAL DONE ===== */
+function manDone(cid,e) {
+  e.stopPropagation();
+  var card=document.getElementById(cid);
+  var isDone=card.className.indexOf('done')>=0;
+  if (isDone) {
+    card.className=card.className.replace(' done','').replace('done','').trim();
+    var p=lsJ('wp')||{}; delete p[cid]; lsSJ('wp',p);
+    SC['br'+cid.replace('c','')]=0;
+    var brId='br'+cid.replace('c','');
+    var btn=document.getElementById(brId);
+    if (btn&&btn.getAttribute('data-total')) {
+      var t=parseInt(btn.getAttribute('data-total'));
+      btn.innerHTML='&#x23F1; \u05e1\u05d9\u05d9\u05dd \u05e1\u05d8 (1/'+t+')';
+    }
+  } else {
+    card.className+=' done';
+    var p=lsJ('wp')||{}; p[cid]=true; lsSJ('wp',p);
+  }
+}
+
+/* ===== REST TIMER ===== */
+var RT={}, SC={};
+
+function doRest(rid,cid,total,btn) {
+  var brId=btn.id;
+  if (RT[brId]) { cancelRest(rid,brId,total); return; }
+  btn.setAttribute('data-total',total);
+  if (!SC[brId]) SC[brId]=0;
+  SC[brId]++;
+  var cur=SC[brId];
+  var box=document.getElementById(rid);
+  var num=document.getElementById('rn'+rid.replace('r',''));
+  var lbl=document.getElementById('rl'+rid.replace('r',''));
+  var sub=document.getElementById('rs'+rid.replace('r',''));
+  box.className='rbox on';
+  var s=60; num.textContent=s;
+  if (lbl) lbl.textContent='\u05e1\u05d8 '+cur+'/'+total+' \u05d4\u05d5\u05e9\u05dc\u05dd';
+  if (sub) sub.textContent='60 \u05e9\u05e0\u05d9\u05d5\u05ea';
+  btn.innerHTML='&#x23F1; \u05de\u05e0\u05d5\u05d7\u05d4...';
+  RT[brId]=setInterval(function(){
+    s--; num.textContent=s;
+    if (sub) sub.textContent=s+'\u05e9\u05e0\u05d9\u05d5\u05ea';
+    if (s<=0) {
+      clearInterval(RT[brId]); delete RT[brId];
+      if (navigator.vibrate) navigator.vibrate([300,100,300]);
+      if (cur>=total) {
+        SC[brId]=0;
+        var card=document.getElementById(cid);
+        if (card&&card.className.indexOf('done')<0) card.className+=' done';
+        var p=lsJ('wp')||{}; p[cid]=true; lsSJ('wp',p);
+        btn.innerHTML='&#x2705; \u05d4\u05d5\u05e9\u05dc\u05dd!';
+        if (lbl) lbl.textContent='\u05db\u05dc \u05d4\u05e1\u05d8\u05d9\u05dd \u05d4\u05d5\u05e9\u05dc\u05de\u05d5!';
+        if (sub) sub.textContent='';
+        if (navigator.vibrate) navigator.vibrate([500,200,500]);
+        setTimeout(function(){box.className='rbox';},3000);
+      } else {
+        btn.innerHTML='&#x23F1; \u05e1\u05d9\u05d9\u05dd \u05e1\u05d8 ('+(cur+1)+'/'+total+')';
+        if (lbl) lbl.textContent='\u05de\u05d5\u05db\u05df \u05dc\u05e1\u05d8 '+(cur+1)+'/'+total;
+        if (sub) sub.textContent='\u05dc\u05d7\u05e5 \u05db\u05e9\u05de\u05d5\u05db\u05df';
+        setTimeout(function(){box.className='rbox';},4000);
+      }
+    }
+  },1000);
+}
+
+function cancelRest(rid,brId,total) {
+  if (RT[brId]) { clearInterval(RT[brId]); delete RT[brId]; }
+  SC[brId]=Math.max(0,(SC[brId]||1)-1);
+  var box=document.getElementById(rid);
+  var num=document.getElementById('rn'+rid.replace('r',''));
+  if (box) box.className='rbox';
+  if (num) num.textContent='60';
+  var btn=document.getElementById(brId);
+  var next=(SC[brId]||0)+1;
+  if (btn) btn.innerHTML='&#x23F1; \u05e1\u05d9\u05d9\u05dd \u05e1\u05d8 ('+next+'/'+total+')';
+}
+
+/* ===== PLANK ===== */
+var PI=null,PS=2,PC=1,PSec=60,PPh='work';
+function startPlank(){
+  PS=2;PC=1;PSec=60;PPh='work';
+  document.getElementById('plov').className='plov on';
+  updPlank();
+  if(PI)clearInterval(PI);
+  PI=setInterval(function(){
+    PSec--;
+    if(PSec<0){
+      if(PPh==='work'){PPh='rest';PSec=60;if(navigator.vibrate)navigator.vibrate([200,100,200]);}
+      else if(PC<PS){PC++;PPh='work';PSec=60;if(navigator.vibrate)navigator.vibrate([300,100,300]);}
+      else{PPh='done';PSec=0;clearInterval(PI);PI=null;if(navigator.vibrate)navigator.vibrate([500,200,500,200,500]);}
+    }
+    updPlank();
+  },1000);
+}
+function updPlank(){
+  var ph=document.getElementById('plph'),cl=document.getElementById('plcl'),st=document.getElementById('plst'),dt=document.getElementById('pldots');
+  if(PPh==='work'){ph.className='plph work';ph.textContent='\u05e2\u05d1\u05d5\u05d3\u05d4 - \u05d4\u05d7\u05d6\u05e7 \u05e4\u05dc\u05d0\u05e0\u05e7!';}
+  else if(PPh==='rest'){ph.className='plph rest';ph.textContent='\u05de\u05e0\u05d5\u05d7\u05d4';}
+  else{ph.className='plph done';ph.textContent='\u05e1\u05d9\u05d9\u05de\u05ea! \u05db\u05dc \u05d4\u05db\u05d1\u05d5\u05d3!';}
+  cl.textContent=PSec; st.textContent='\u05e1\u05d8 '+PC+' \u05de\u05ea\u05d5\u05da '+PS;
+  var d=''; for(var i=1;i<=PS;i++){var c='pldot';if(i<PC)c+=' done';else if(i===PC)c+=' active';d+='<div class="'+c+'"></div>';}
+  dt.innerHTML=d;
+}
+function stopPlank(){if(PI){clearInterval(PI);PI=null;}document.getElementById('plov').className='plov';}
+
+/* ===== STORAGE ===== */
+var MEM={};
+var LS=(function(){try{localStorage.setItem('_t','1');localStorage.removeItem('_t');return true;}catch(e){return false;}})();
+function lsR(k){if(LS){try{return localStorage.getItem(k);}catch(e){}}return MEM[k]||null;}
+function lsW(k,v){MEM[k]=v;if(LS){try{localStorage.setItem(k,v);}catch(e){}}}
+function lsD(k){delete MEM[k];if(LS){try{localStorage.removeItem(k);}catch(e){}}}
+function lsJ(k){try{return JSON.parse(lsR(k));}catch(e){return null;}}
+function lsSJ(k,v){lsW(k,JSON.stringify(v));}
+
+/* ===== LOAD DONE STATE ===== */
+window.addEventListener('load',function(){
+  var prog=lsJ('wp')||{};
+  for(var id in prog) if(prog[id]){var el=document.getElementById(id);if(el)el.classList.add('done');}
+  renderAtt();
+  wtInit();
+  showDailyTip();
+  // age now calculated in wtRender
+});
+
+/* ===== TRACKING SUBTABS ===== */
+function swTr(i){
+  document.getElementById('tr-a').style.display=i===0?'block':'none';
+  document.getElementById('tr-s').style.display=i===1?'block':'none';
+  document.getElementById('tr-r').style.display=i===2?'block':'none';
+  document.getElementById('st0').className='stab'+(i===0?' on':'');
+  document.getElementById('st1').className='stab'+(i===1?' on':'');
+  document.getElementById('st2').className='stab'+(i===2?' ron':'');
+  if(i===0) renderAtt();
+  if(i===2) renderRunH();
+}
+
+/* ===== EXERCISES ===== */
+var EX=[
+  {id:'e1',he:'\u05dc\u05d7\u05d9\u05e6\u05ea \u05e8\u05d2\u05dc\u05d9\u05d9\u05dd',en:'Leg Press',sets:'3',reps:'10-12',kg:'41'},
+  {id:'e2',he:'\u05db\u05e4\u05d9\u05e4\u05ea \u05d1\u05e8\u05da \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Leg Curl',sets:'3',reps:'10-12',kg:'36'},
+  {id:'e3',he:'\u05e2\u05dc\u05d9\u05d5\u05ea \u05ea\u05d0\u05d5\u05de\u05d9\u05d9\u05dd',en:'Calf Raise',sets:'2',reps:'15-20',kg:''},
+  {id:'e4',he:'\u05de\u05e9\u05d9\u05db\u05d4 \u05d1\u05e4\u05d5\u05dc\u05d9 \u05e2\u05dc\u05d9\u05d5\u05df',en:'Lat Pulldown',sets:'3',reps:'10-12',kg:'34'},
+  {id:'e5',he:'\u05d7\u05ea\u05d9\u05e8\u05d4 \u05d1\u05d9\u05e9\u05d9\u05d1\u05d4 \u05d1\u05db\u05d1\u05dc',en:'Seated Cable Row',sets:'3',reps:'10-12',kg:''},
+  {id:'e6',he:'\u05dc\u05d7\u05d9\u05e6\u05ea \u05d7\u05d6\u05d4 \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Machine Chest Press',sets:'3',reps:'10-12',kg:'36'},
+  {id:'e7',he:'\u05e4\u05e8\u05e4\u05e8 \u05d7\u05d6\u05d4 \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Pec Deck Fly',sets:'2',reps:'12-15',kg:''},
+  {id:'e8',he:'\u05dc\u05d7\u05d9\u05e6\u05ea \u05db\u05ea\u05e4\u05d9\u05d9\u05dd \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Machine Shoulder Press',sets:'3',reps:'10-12',kg:''},
+  {id:'e9',he:'\u05d4\u05e8\u05de\u05d5\u05ea \u05e6\u05d3 \u05e2\u05dd \u05d3\u05de\u05d1\u05dc\u05d9\u05dd',en:'Lateral Raise',sets:'2',reps:'12-15',kg:'5'},
+  {id:'e10',he:'\u05db\u05e4\u05d9\u05e4\u05ea \u05de\u05e8\u05e4\u05e7\u05d9\u05dd \u05d1\u05e9\u05d9\u05e4\u05d5\u05e2',en:'Incline Dumbbell Curl',sets:'3',reps:'10-12',kg:'7'},
+  {id:'e11',he:'\u05d3\u05d7\u05d9\u05e4\u05ea \u05d8\u05e8\u05d9\u05e6\u05e4 \u05d1\u05d7\u05d1\u05dc',en:'Tricep Rope Pushdown',sets:'3',reps:'10-12',kg:''},
+  {id:'e12',he:'\u05e4\u05dc\u05d0\u05e0\u05e7',en:'Plank',sets:'2',reps:'60',kg:''},
+  {id:'e13',he:'\u05e4\u05d9\u05e0\u05d2\u05d5\u05d5\u05d9\u05df',en:'Penguin Crunch',sets:'3',reps:'20-30',kg:''},
+  {id:'e14',he:'\u05d4\u05e8\u05de\u05ea \u05e8\u05d2\u05dc\u05d9\u05d9\u05dd \u05ea\u05dc\u05d5\u05d9\u05d4',en:'Hanging Leg Raise',sets:'3',reps:'12-15',kg:''}
+];
+
+var trReady=false;
+function initTr(){
+  if(trReady){renderStrH();return;}
+  trReady=true;
+  var today=new Date();
+  var ds=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
+  document.getElementById('log-date').value=ds;
+  document.getElementById('run-date').value=ds;
+  var draft=lsJ('wh_draft');
+  if(draft) document.getElementById('log-date').value=draft.date;
+  document.getElementById('dbadge').style.display=draft?'inline':'none';
+  var html='';
+  for(var i=0;i<EX.length;i++){
+    var ex=EX[i],dv=null;
+    if(draft) for(var k=0;k<draft.entries.length;k++) if(draft.entries[k].id===ex.id){dv=draft.entries[k];break;}
+    var kgV=dv?dv.kg:ex.kg,stV=dv?dv.sets:ex.sets,rpV=dv?dv.reps:ex.reps,unit=dv?(dv.unit||'kg'):'kg';
+    html+='<div class="log-row"><div class="lname">'+ex.he+'<small>'+ex.en+'</small></div><div class="linputs">';
+    html+='<input class="inp" type="text" id="kg-'+ex.id+'" value="'+kgV+'" placeholder="\u05de\u05e9\u05e7\u05dc" onclick="this.select()">';
+    html+='<input class="inp" type="text" id="st-'+ex.id+'" value="'+stV+'" placeholder="\u05e1\u05d8\u05d9\u05dd" onclick="this.select()">';
+    html+='<input class="inp" type="text" id="rp-'+ex.id+'" value="'+rpV+'" placeholder="\u05d7\u05d6" onclick="this.select()">';
+    html+='<div class="utog"><span class="ut'+(unit==='kg'?' on':'')+'" onclick="setUnit(\''+ex.id+'\',\'kg\')">KG</span><span class="ut'+(unit==='lb'?' on':'')+'" onclick="setUnit(\''+ex.id+'\',\'lb\')">LB</span></div>';
+    html+='</div></div>';
+  }
+  document.getElementById('log-form').innerHTML=html;
+  renderStrH();
+  document.getElementById('run-dist').addEventListener('input',updPace);
+  document.getElementById('run-time').addEventListener('input',updPace);
+}
+
+function setUnit(id,unit){
+  var rows=document.querySelectorAll('.log-row');
+  for(var i=0;i<EX.length;i++) if(EX[i].id===id){var opts=rows[i].querySelectorAll('.ut');for(var j=0;j<opts.length;j++) opts[j].className='ut'+(opts[j].textContent.toLowerCase()===unit?' on':'');break;}
+}
+function collectE(){
+  var rows=document.querySelectorAll('.log-row'),entries=[];
+  for(var i=0;i<EX.length;i++){
+    var ex=EX[i],utEl=rows[i]?rows[i].querySelector('.ut.on'):null,unit=utEl?utEl.textContent.toLowerCase():'kg';
+    entries.push({id:ex.id,he:ex.he,kg:document.getElementById('kg-'+ex.id).value,sets:document.getElementById('st-'+ex.id).value,reps:document.getElementById('rp-'+ex.id).value,unit:unit});
+  }
+  return entries;
+}
+function showMsg(id){var el=document.getElementById(id);el.style.display='block';setTimeout(function(){el.style.display='none';},2500);}
+function saveDraft(){lsSJ('wh_draft',{date:document.getElementById('log-date').value,entries:collectE()});document.getElementById('dbadge').style.display='inline';showMsg('msg-dr');}
+function finishWO(){
+  var date=document.getElementById('log-date').value;if(!date){alert('\u05d1\u05d7\u05e8 \u05ea\u05d0\u05e8\u05d9\u05da');return;}
+  var all=collectE(),entries=[];
+  for(var i=0;i<all.length;i++) if(all[i].kg) entries.push({he:all[i].he,kg:all[i].kg,sets:all[i].sets,reps:all[i].reps,unit:all[i].unit});
+  if(!entries.length){alert('\u05d4\u05d6\u05df \u05dc\u05e4\u05d7\u05d5\u05ea \u05de\u05e9\u05e7\u05dc \u05d0\u05d7\u05d3');return;}
+  var h=lsJ('wh')||[];h.unshift({date:date,entries:entries});if(h.length>100)h=h.slice(0,100);
+  lsSJ('wh',h);lsD('wh_draft');document.getElementById('dbadge').style.display='none';
+  renderStrH();showMsg('msg-ok');
+}
+function delWO(idx){if(!confirm('\u05dc\u05de\u05d7\u05d5\u05e7?'))return;var h=lsJ('wh')||[];h.splice(idx,1);lsSJ('wh',h);renderStrH();}
+function editWO(idx){
+  var h=lsJ('wh')||[],w=h[idx],entries=[];
+  for(var i=0;i<EX.length;i++){var found=null;for(var k=0;k<w.entries.length;k++) if(w.entries[k].he===EX[i].he){found=w.entries[k];break;}entries.push({id:EX[i].id,he:EX[i].he,kg:found?found.kg:EX[i].kg,sets:found?found.sets:EX[i].sets,reps:found?found.reps:EX[i].reps,unit:found?(found.unit||'kg'):'kg'});}
+  h.splice(idx,1);lsSJ('wh',h);lsSJ('wh_draft',{date:w.date,entries:entries});trReady=false;sw(3);
+}
+var DAYS=['\u05e8\u05d0\u05e9\u05d5\u05df','\u05e9\u05e0\u05d9','\u05e9\u05dc\u05d9\u05e9\u05d9','\u05e8\u05d1\u05d9\u05e2\u05d9','\u05d7\u05de\u05d9\u05e9\u05d9','\u05e9\u05d9\u05e9\u05d9','\u05e9\u05d1\u05ea'];
+var MONTHS=['\u05d9\u05e0\u05d5\u05d0\u05e8','\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8','\u05de\u05e8\u05e5','\u05d0\u05e4\u05e8\u05d9\u05dc','\u05de\u05d0\u05d9','\u05d9\u05d5\u05e0\u05d9','\u05d9\u05d5\u05dc\u05d9','\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8','\u05e1\u05e4\u05d8\u05de\u05d1\u05e8','\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8','\u05e0\u05d5\u05d1\u05de\u05d1\u05e8','\u05d3\u05e6\u05de\u05d1\u05e8'];
+function renderStrH(){
+  var h=lsJ('wh')||[],el=document.getElementById('hist-s');if(!el)return;
+  if(!h.length){el.innerHTML='<div class="empty">\u05e2\u05d3\u05d9\u05d9\u05df \u05d0\u05d9\u05df \u05d0\u05d9\u05de\u05d5\u05e0\u05d9\u05dd</div>';return;}
+  var out='';
+  for(var i=0;i<h.length;i++){
+    var w=h[i],dt=new Date(w.date),ds=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
+    out+='<div class="hwcard"><div class="hwhd"><span class="hwdt">'+ds+'</span><div class="hwac"><button class="hwbtn" onclick="editWO('+i+')">&#x270F;</button><button class="hwbtn" onclick="delWO('+i+')">&#x1F5D1;</button></div></div><div class="hwbd">';
+    for(var j=0;j<w.entries.length;j++){var e=w.entries[j],ul=e.unit==='lb'?'LB':'KG';out+='<div class="hwrow"><span class="hwnm">'+e.he+'</span><span class="hwvl">'+e.sets+' x '+e.reps+' | <b>'+e.kg+' '+ul+'</b></span></div>';}
+    out+='</div></div>';
+  }
+  el.innerHTML=out;
+}
+
+/* ===== RUN ===== */
+var RF=0;
+function setFeel(n){RF=n;for(var i=1;i<=4;i++) document.getElementById('f'+i).className='fbtn'+(i===n?' on':'');}
+function calcPace(d,m){if(!d||!m||isNaN(d)||isNaN(m)||d<=0)return'';var p=m/d,pm=Math.floor(p),ps=Math.round((p-pm)*60);if(ps===60){pm++;ps=0;}return pm+':'+(ps<10?'0':'')+ps+' \u05d3\u05e7\'/\u05e7"\u05de';}
+function updPace(){var d=parseFloat(document.getElementById('run-dist').value),t=parseFloat(document.getElementById('run-time').value),pb=document.getElementById('pacebox'),pace=calcPace(d,t);if(pace){pb.style.display='block';pb.innerHTML='&#x23F1; \u05d8\u05de\u05e4\u05d5: <b>'+pace+'</b>';}else pb.style.display='none';}
+function saveRun(){
+  var date=document.getElementById('run-date').value;if(!date){alert('\u05d1\u05d7\u05e8 \u05ea\u05d0\u05e8\u05d9\u05da');return;}
+  var dist=document.getElementById('run-dist').value,time=document.getElementById('run-time').value;
+  if(!dist&&!time){alert('\u05d4\u05d6\u05df \u05de\u05e8\u05d7\u05e7 \u05d0\u05d5 \u05d6\u05de\u05df');return;}
+  var run={date:date,dist:dist,time:time,interval:document.getElementById('run-ivl').value,hr:document.getElementById('run-hr').value,feel:RF,notes:document.getElementById('run-notes').value,pace:calcPace(parseFloat(dist),parseFloat(time))};
+  var runs=lsJ('runs')||[];runs.unshift(run);if(runs.length>100)runs=runs.slice(0,100);
+  lsSJ('runs',runs);renderRunH();showMsg('msg-run');
+  document.getElementById('run-dist').value='';document.getElementById('run-time').value='';document.getElementById('run-hr').value='';document.getElementById('run-notes').value='';document.getElementById('pacebox').style.display='none';
+  RF=0;for(var i=1;i<=4;i++) document.getElementById('f'+i).className='fbtn';
+  renderRunExtras();
+}
+function delRun(idx){if(!confirm('\u05dc\u05de\u05d7\u05d5\u05e7?'))return;var runs=lsJ('runs')||[];runs.splice(idx,1);lsSJ('runs',runs);renderRunH();}
+var FEEL=['','&#x1F622; \u05e7\u05e9\u05d4','&#x1F610; \u05e1\u05d1\u05d9\u05e8','&#x1F60A; \u05d8\u05d5\u05d1','&#x1F4AA; \u05de\u05e2\u05d5\u05dc\u05d4'];
+function renderRunH(){
+  var runs=lsJ('runs')||[],el=document.getElementById('hist-r');if(!el)return;
+  if(!runs.length){el.innerHTML='<div class="empty">\u05e2\u05d3\u05d9\u05d9\u05df \u05d0\u05d9\u05df \u05e8\u05d9\u05e6\u05d5\u05ea</div>';return;}
+  var out='';
+  for(var i=0;i<runs.length;i++){
+    var r=runs[i],dt=new Date(r.date),ds=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
+    out+='<div class="runcard"><div class="runhd"><span class="hwdt">&#x1F3C3; '+ds+'</span><div class="hwac"><button class="hwbtn" onclick="delRun('+i+')">&#x1F5D1;</button></div></div><div class="runbd">';
+    out+='<div class="runsts"><div class="runst"><div class="rsv">'+(r.dist||'&mdash;')+'</div><div class="rsl">\u05e7"\u05de</div></div><div class="runst"><div class="rsv">'+(r.time||'&mdash;')+'</div><div class="rsl">\u05d3\u05e7\u05d5\u05ea</div></div><div class="runst"><div class="rsv">'+(r.pace||'&mdash;')+'</div><div class="rsl">\u05d8\u05de\u05e4\u05d5</div></div></div>';
+    if(r.interval&&r.interval!=='other') out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">&#x1F503; '+r.interval.replace('/',' / ')+'</div>';
+    if(r.hr) out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">&#x2764; '+r.hr+' bpm</div>';
+    if(r.feel) out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">'+FEEL[r.feel]+'</div>';
+    if(r.notes) out+='<div style="font-size:.74rem;color:#4a5568;background:#f8fafc;padding:6px 8px;border-radius:6px">'+r.notes+'</div>';
+    out+='</div></div>';
+  }
+  el.innerHTML=out;
+}
+
+/* ===== ATTENDANCE ===== */
+// 14-day alternating cycle. Reference: Sun 22 Mar 2026 = day 0 = strength
+var ATT_REF = new Date('2026-03-22');
+ATT_REF.setHours(0,0,0,0);
+
+function getWT(ds) {
+  var d = new Date(ds); d.setHours(0,0,0,0);
+  var diff = Math.round((d - ATT_REF) / 86400000);
+  if (diff < 0) diff = ((diff % 14) + 14) % 14; // handle dates before ref
+  var dayInCycle = ((diff % 14) + 14) % 14;
+  if (dayInCycle % 2 !== 0) return 0; // rest day
+  return (dayInCycle / 2) % 2 === 0 ? 1 : 2; // alternates: strength, run, strength, run...
+}
+
+function togAtt(ds){
+  var data=lsJ('att')||{},cur=data[ds];
+  if(!cur) data[ds]='done';
+  else if(cur==='done') data[ds]='missed';
+  else delete data[ds];
+  lsSJ('att',data);
+  renderAtt();
+}
+
+function renderAtt(){
+  var cont=document.getElementById('att-cont');if(!cont)return;
+  var data=lsJ('att')||{};
+  var today=new Date();today.setHours(0,0,0,0);
+  var dlbls=['\u05d0','\u05d1','\u05d2','\u05d3','\u05d4','\u05d5','\u05e9'];
+  var out='';
+
+  for(var m=0;m<3;m++){
+    var yr=new Date(today.getFullYear(),today.getMonth()+m,1).getFullYear();
+    var mo=new Date(today.getFullYear(),today.getMonth()+m,1).getMonth();
+    var dim=new Date(yr,mo+1,0).getDate();
+    var sdow=new Date(yr,mo,1).getDay();
+    var total=0,done=0,missed=0;
+    for(var d=1;d<=dim;d++){
+      var dd=new Date(yr,mo,d);dd.setHours(0,0,0,0);
+      var key=yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+      if(getWT(key)>0&&dd<=today){total++;var st=data[key];if(st==='done')done++;else if(st==='missed')missed++;}
+    }
+    var pct=total>0?Math.round(done/total*100):0;
+    out+='<div class="att-month"><div class="att-mhdr"><span class="att-mtit">'+MONTHS[mo]+' '+yr+'</span><span class="att-mst">'+done+'/'+total+' | '+pct+'%</span></div>';
+    out+='<table style="width:100%;border-collapse:collapse;table-layout:fixed"><thead><tr>';
+    for(var h=0;h<7;h++) out+='<th style="font-size:.6rem;font-weight:700;color:#8fa8c0;text-align:center;padding:3px 0;border:none;background:none">'+dlbls[h]+'</th>';
+    out+='</tr></thead><tbody><tr>';
+    var col=0;
+    for(var e=0;e<sdow;e++){out+='<td style="height:38px"></td>';col++;}
+    for(var d2=1;d2<=dim;d2++){
+      if(col>0&&col%7===0) out+='</tr><tr>';
+      var dd2=new Date(yr,mo,d2);dd2.setHours(0,0,0,0);
+      var key2=yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(d2).padStart(2,'0');
+      var tp=getWT(key2),st2=data[key2],isFut=dd2>today,isToday=dd2.getTime()===today.getTime();
+      var bg,border='1px solid transparent',cursor='default',icon='';
+      if(tp===0){bg='#f0f4f8';}
+      else if(isFut){bg='#f8fafc';icon=tp===1?'&#x1F3CB;':'&#x1F3C3;';}
+      else if(st2==='done'){bg=tp===1?'#e8f8f0':'#e8f0fa';border=tp===1?'1px solid #a9dfbf':'1px solid #aed6f1';icon='&#x2705;';cursor='pointer';}
+      else if(st2==='missed'){bg='#fef0f0';border='1px solid #f5c0c0';icon='&#x274C;';cursor='pointer';}
+      else{bg='#fff8e8';border='1px solid #f0c890';icon=tp===1?'&#x1F3CB;':'&#x1F3C3;';cursor='pointer';}
+      var outline=isToday?';outline:2px solid #e8a020;outline-offset:-1px':'';
+      var oc=tp>0&&!isFut?' onclick="togAtt(\''+key2+'\')"':'';
+      out+='<td'+oc+' style="text-align:center;vertical-align:middle;height:38px;border-radius:6px;background:'+bg+';border:'+border+';cursor:'+cursor+outline+';padding:1px 0">';
+      out+='<div style="font-size:.65rem;font-weight:800;line-height:1.3">'+d2+'</div>';
+      out+='<div style="font-size:.7rem;line-height:1">'+icon+'</div>';
+      out+='</td>';
+      col++;
+    }
+    while(col%7!==0){out+='<td style="height:38px"></td>';col++;}
+    out+='</tr></tbody></table></div>';
+  }
+  cont.innerHTML=out;
+}
+
+/* ===== INTERVAL TIMER ===== */
+var RT_PHASES = [
+  {run:120, walk:120, reps:5, label:'2 \u05d3\u05e7\' \u05e8\u05d9\u05e6\u05d4 / 2 \u05d3\u05e7\' \u05d4\u05dc\u05d9\u05db\u05d4 x5'},
+  {run:120, walk:90,  reps:6, label:'2 \u05d3\u05e7\' \u05e8\u05d9\u05e6\u05d4 / 90 \u05e9\u05e0\' \u05d4\u05dc\u05d9\u05db\u05d4 x6'},
+  {run:150, walk:90,  reps:6, label:'2.5 \u05d3\u05e7\' \u05e8\u05d9\u05e6\u05d4 / 90 \u05e9\u05e0\' \u05d4\u05dc\u05d9\u05db\u05d4 x6'},
+  {run:180, walk:60,  reps:5, label:'3 \u05d3\u05e7\' \u05e8\u05d9\u05e6\u05d4 / 60 \u05e9\u05e0\' \u05d4\u05dc\u05d9\u05db\u05d4 x5'}
+];
+var rtPhaseIdx=0,rtIv=null,rtSecs=0,rtRep=1,rtIsRun=true,rtRunning=false;
+
+function rtSelectPhase(){
+  rtPhaseIdx=parseInt(document.getElementById('rt-phase-sel').value);
+  rtReset();
+  for(var i=0;i<4;i++){var tr=document.getElementById('rphase-'+i);if(tr)tr.className=i===rtPhaseIdx?'now':'';}
+}
+function rtReset(){
+  if(rtIv){clearInterval(rtIv);rtIv=null;}
+  rtRunning=false;rtRep=1;rtSecs=RT_PHASES[rtPhaseIdx].run;rtIsRun=true;
+  var btn=document.getElementById('rt-start-btn');
+  if(btn){btn.innerHTML='&#x25B6; \u05d4\u05ea\u05d7\u05dc';btn.style.background='#1D9E75';}
+  document.getElementById('rt-clock').textContent='00:00';
+  document.getElementById('rt-mode-lbl').textContent='\u05dc\u05d7\u05e5 \u05d4\u05ea\u05d7\u05dc';
+  document.getElementById('rt-mode-lbl').style.color='white';
+  document.getElementById('rt-rep-lbl').textContent='';
+  rtUpdateInfo();
+}
+function rtUpdateInfo(){
+  var el=document.getElementById('rt-phase-info');
+  if(el) el.textContent=RT_PHASES[rtPhaseIdx].label;
+}
+function rtStart(){
+  var btn=document.getElementById('rt-start-btn');
+  if(rtRunning){clearInterval(rtIv);rtIv=null;rtRunning=false;btn.innerHTML='&#x25B6; \u05d4\u05de\u05e9\u05da';btn.style.background='#1D9E75';return;}
+  rtRunning=true;btn.innerHTML='&#x23F8; \u05e2\u05e6\u05d5\u05e8';btn.style.background='#c0392b';
+  rtIv=setInterval(function(){
+    rtSecs--;
+    var p=RT_PHASES[rtPhaseIdx];
+    var mm=Math.floor(rtSecs/60),ss=rtSecs%60;
+    document.getElementById('rt-clock').textContent=(mm<10?'0':'')+mm+':'+(ss<10?'0':'')+ss;
+    var ml=document.getElementById('rt-mode-lbl');
+    if(rtIsRun){ml.textContent='\u05e8\u05d5\u05e5!';ml.style.color='#5dd9a8';}
+    else{ml.textContent='\u05d4\u05dc\u05d9\u05db\u05d4';ml.style.color='#f0c890';}
+    document.getElementById('rt-rep-lbl').textContent='\u05e1\u05d8 '+rtRep+' \u05de\u05ea\u05d5\u05da '+p.reps;
+    if(rtSecs<=0){
+      if(navigator.vibrate)navigator.vibrate([300,100,300]);
+      if(rtIsRun){rtIsRun=false;rtSecs=p.walk;}
+      else{
+        rtRep++;
+        if(rtRep>p.reps){
+          clearInterval(rtIv);rtIv=null;rtRunning=false;
+          ml.textContent='\u05e1\u05d9\u05d9\u05de\u05ea! \u05db\u05dc \u05d4\u05db\u05d1\u05d5\u05d3!';ml.style.color='#5dd9a8';
+          document.getElementById('rt-rep-lbl').textContent='';
+          document.getElementById('rt-clock').textContent='00:00';
+          btn.innerHTML='&#x25B6; \u05d4\u05ea\u05d7\u05dc';btn.style.background='#1D9E75';
+          if(navigator.vibrate)navigator.vibrate([500,200,500,200,500]);
+          return;
+        }
+        rtIsRun=true;rtSecs=p.run;
+      }
+    }
+  },1000);
+}
+
+/* ===== RUN EXTRAS ===== */
+function renderRunExtras(){
+  var runs=lsJ('runs')||[];
+  var statsEl=document.getElementById('run-stats-row');
+  if(statsEl){
+    var totalKm=0,bestPace=null;
+    for(var i=0;i<runs.length;i++){
+      if(runs[i].dist) totalKm+=parseFloat(runs[i].dist)||0;
+      if(runs[i].pace){
+        var pts=runs[i].pace.split(':');
+        if(pts.length===2){var ps=parseInt(pts[0])*60+parseInt(pts[1]);if(!bestPace||ps<bestPace)bestPace=ps;}
+      }
+    }
+    var bStr=bestPace?Math.floor(bestPace/60)+':'+(bestPace%60<10?'0':'')+bestPace%60+' \u05d3\u05e7\'/\u05e7"\u05de':'&mdash;';
+    statsEl.innerHTML=
+      '<div style="background:white;border-radius:10px;padding:10px 6px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.07)"><div style="font-size:1.1rem;font-weight:800;color:#0d1b2a">'+totalKm.toFixed(1)+'</div><div style="font-size:.62rem;color:#6b7e94;margin-top:2px">\u05e1\u05d4"\u05db \u05e7"\u05de</div></div>'+
+      '<div style="background:white;border-radius:10px;padding:10px 6px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.07)"><div style="font-size:1.1rem;font-weight:800;color:#0d1b2a">'+runs.length+'</div><div style="font-size:.62rem;color:#6b7e94;margin-top:2px">\u05e8\u05d9\u05e6\u05d5\u05ea</div></div>'+
+      '<div style="background:white;border-radius:10px;padding:10px 6px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.07)"><div style="font-size:.88rem;font-weight:800;color:#0d1b2a">'+bStr+'</div><div style="font-size:.62rem;color:#6b7e94;margin-top:2px">\u05e9\u05d9\u05d0 \u05d8\u05de\u05e4\u05d5</div></div>';
+  }
+  var achEl=document.getElementById('run-achievements');
+  if(achEl){
+    var totalKm2=0;
+    for(var i=0;i<runs.length;i++) totalKm2+=parseFloat(runs[i].dist)||0;
+    var all=[
+      {icon:'&#x1F3C3;',label:'\u05e8\u05d9\u05e6\u05d4 \u05e8\u05d0\u05e9\u05d5\u05e0\u05d4',done:runs.length>=1},
+      {icon:'&#x1F525;',label:'5 \u05e8\u05d9\u05e6\u05d5\u05ea',done:runs.length>=5},
+      {icon:'&#x1F3C5;',label:'10 \u05e8\u05d9\u05e6\u05d5\u05ea',done:runs.length>=10},
+      {icon:'&#x1F4CD;',label:'5 \u05e7"\u05de \u05e1\u05d4"\u05db',done:totalKm2>=5},
+      {icon:'&#x1F30D;',label:'20 \u05e7"\u05de \u05e1\u05d4"\u05db',done:totalKm2>=20},
+      {icon:'&#x26A1;',label:'\u05e9\u05d9\u05e4\u05d5\u05e8 \u05d8\u05de\u05e4\u05d5',done:runs.length>=3}
+    ];
+    var out='';
+    for(var i=0;i<all.length;i++){
+      var a=all[i];
+      out+='<div style="display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:.72rem;font-weight:700;border:1px solid '+(a.done?'#a9dfbf':'#d0dcea')+';background:'+(a.done?'#e8f8f0':'#f0f4f8')+';color:'+(a.done?'#1a7a4f':'#8fa8c0')+'">'+a.icon+' '+a.label+(a.done?' &#x2705;':'')+'</div>';
+    }
+    achEl.innerHTML=out;
+  }
+  var canvas=document.getElementById('run-chart');
+  var emptyEl=document.getElementById('run-chart-empty');
+  if(!canvas) return;
+  var rwp=[];
+  for(var i=0;i<runs.length;i++) if(runs[i].pace) rwp.push(runs[i]);
+  if(rwp.length<2){canvas.style.display='none';if(emptyEl)emptyEl.style.display='block';return;}
+  canvas.style.display='block';if(emptyEl)emptyEl.style.display='none';
+  canvas.width=canvas.offsetWidth||320;
+  var ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height;
+  ctx.clearRect(0,0,W,H);
+  var pts=[];
+  for(var i=rwp.length-1;i>=0;i--){
+    var p2=rwp[i].pace.split(':');
+    if(p2.length===2) pts.push({sec:parseInt(p2[0])*60+parseInt(p2[1]),lbl:rwp[i].date.slice(5)});
+  }
+  var minP=Infinity,maxP=0;
+  for(var i=0;i<pts.length;i++){if(pts[i].sec<minP)minP=pts[i].sec;if(pts[i].sec>maxP)maxP=pts[i].sec;}
+  var pad=30,rng=maxP-minP||60;
+  ctx.strokeStyle='#f0f4f8';ctx.lineWidth=1;
+  for(var g=0;g<=4;g++){var gy=pad+(H-pad*2)*(g/4);ctx.beginPath();ctx.moveTo(pad,gy);ctx.lineTo(W-pad,gy);ctx.stroke();}
+  ctx.strokeStyle='#1D9E75';ctx.lineWidth=2.5;ctx.lineJoin='round';ctx.beginPath();
+  for(var i=0;i<pts.length;i++){
+    var gx=pad+(W-pad*2)*(i/(pts.length-1));
+    var gy=pad+(H-pad*2)*((pts[i].sec-minP)/rng);
+    gy=(H-pad)-gy+pad;
+    if(i===0)ctx.moveTo(gx,gy);else ctx.lineTo(gx,gy);
+  }
+  ctx.stroke();
+  for(var i=0;i<pts.length;i++){
+    var gx=pad+(W-pad*2)*(i/(pts.length-1));
+    var gy=pad+(H-pad*2)*((pts[i].sec-minP)/rng);
+    gy=(H-pad)-gy+pad;
+    ctx.fillStyle='#1D9E75';ctx.beginPath();ctx.arc(gx,gy,4,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='#6b7e94';ctx.font='10px sans-serif';ctx.textAlign='center';ctx.fillText(pts[i].lbl,gx,H-4);
+  }
+}
+function initRunTab(){rtUpdateInfo();rtSelectPhase();renderRunExtras();}
+
+
+/* ===== PWA INSTALL BANNER ===== */
+var deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e) {
+  e.preventDefault();
+  deferredPrompt = e;
+  var banner = document.getElementById('install-banner');
+  if (banner) banner.style.display = 'flex';
+});
+
+function installApp() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(r) {
+      deferredPrompt = null;
+      var banner = document.getElementById('install-banner');
+      if (banner) banner.style.display = 'none';
+    });
+  }
+}
+
+window.addEventListener('appinstalled', function() {
+  var banner = document.getElementById('install-banner');
+  if (banner) banner.style.display = 'none';
+});
+
+/* ===== WAKE LOCK ===== */
+var _wl = null;
+function toggleWake() {
+  var btn=document.getElementById('wake-btn');
+  var icon=document.getElementById('wake-icon');
+  if (_wl) { _wl.release().catch(function(){}); return; }
+  if (!('wakeLock' in navigator)) { alert('לא נתמך בדפדפן זה'); return; }
+  navigator.wakeLock.request('screen').then(function(wl) {
+    _wl = wl;
+    if(btn){ btn.style.background='rgba(29,158,117,.3)'; btn.style.borderColor='#1D9E75'; btn.style.color='#5dd9a8'; }
+    if(icon) icon.innerHTML='&#x1F7E2;';
+    wl.addEventListener('release', function() {
+      _wl=null;
+      if(btn){ btn.style.background='rgba(255,255,255,.08)'; btn.style.borderColor='rgba(255,255,255,.15)'; btn.style.color='#8fa8c0'; }
+      if(icon) icon.innerHTML='&#x1F4F5;';
+    });
+  }).catch(function(e){ alert('שגיאה: '+e.message); });
+}
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState==='visible' && !_wl) {
+    var btn=document.getElementById('wake-btn');
+    if (btn && btn.style.borderColor==='rgb(29, 158, 117)') toggleWake();
+  }
+});
+
+</script>
 </html>
