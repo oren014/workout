@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="אימונים">
 <meta name="theme-color" content="#0d1b2a">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1b2a'/%3E%3Crect x='15' y='45' width='70' height='10' rx='5' fill='%231D9E75'/%3E%3Crect x='10' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3Crect x='75' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3C/svg%3E'http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d1b2a'/><text y='.9em' font-size='80' x='10'>AW</text></svg>">
-<link rel="manifest" href="data:application/json,{%22name%22:%22תוכנית%20אימונים%22,%22short_name%22:%22אימונים%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230d1b2a%22,%22theme_color%22:%22%230d1b2a%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1b2a'/%3E%3Crect x='15' y='45' width='70' height='10' rx='5' fill='%231D9E75'/%3E%3Crect x='10' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3Crect x='75' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3C/svg%3E'http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d1b2a'/><text y='.9em' font-size='80' x='10'>AW</text></svg>%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22}]}">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Workout%22%2C%22short_name%22%3A%22Workout%22%2C%22start_url%22%3A%22%2Fworkout%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%230d1b2a%22%2C%22theme_color%22%3A%22%230d1b2a%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%3Csvg+xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27+viewBox%3D%270+0+100+100%27%3E%3Crect+width%3D%27100%27+height%3D%27100%27+rx%3D%2720%27+fill%3D%27%230d1b2a%27%2F%3E%3Crect+x%3D%2715%27+y%3D%2745%27+width%3D%2770%27+height%3D%2710%27+rx%3D%275%27+fill%3D%27%231D9E75%27%2F%3E%3C%2Fsvg%3E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D"><rect width='100' height='100' rx='20' fill='%230d1b2a'/><text y='.9em' font-size='80' x='10'>AW</text></svg>%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22}]}">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0d1b2a;--blue:#1a4f7a;--accent:#e8a020;--light:#f0f4f8;--white:#fff;--text:#1a2332;--muted:#6b7e94;--green:#1D9E75;--red:#c0392b}
@@ -1458,6 +1458,31 @@ function installApp() {
 window.addEventListener('appinstalled', function() {
   var banner = document.getElementById('install-banner');
   if (banner) banner.style.display = 'none';
+});
+
+/* ===== WAKE LOCK ===== */
+var _wl = null;
+function toggleWake() {
+  var btn=document.getElementById('wake-btn');
+  var icon=document.getElementById('wake-icon');
+  if (_wl) { _wl.release().catch(function(){}); return; }
+  if (!('wakeLock' in navigator)) { alert('לא נתמך בדפדפן זה'); return; }
+  navigator.wakeLock.request('screen').then(function(wl) {
+    _wl = wl;
+    if(btn){ btn.style.background='rgba(29,158,117,.3)'; btn.style.borderColor='#1D9E75'; btn.style.color='#5dd9a8'; }
+    if(icon) icon.innerHTML='&#x1F7E2;';
+    wl.addEventListener('release', function() {
+      _wl=null;
+      if(btn){ btn.style.background='rgba(255,255,255,.08)'; btn.style.borderColor='rgba(255,255,255,.15)'; btn.style.color='#8fa8c0'; }
+      if(icon) icon.innerHTML='&#x1F4F5;';
+    });
+  }).catch(function(e){ alert('שגיאה: '+e.message); });
+}
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState==='visible' && !_wl) {
+    var btn=document.getElementById('wake-btn');
+    if (btn && btn.style.borderColor==='rgb(29, 158, 117)') toggleWake();
+  }
 });
 </script>
 <div id="install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0d1b2a;border-top:2px solid #1D9E75;padding:12px 16px;align-items:center;justify-content:space-between;z-index:9999;max-width:480px;margin:0 auto">
