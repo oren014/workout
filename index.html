@@ -7,17 +7,13 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="אימונים">
 <meta name="theme-color" content="#0d1b2a">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1b2a'/%3E%3Crect x='15' y='45' width='70' height='10' rx='5' fill='%231D9E75'/%3E%3Crect x='10' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3Crect x='75' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3C/svg%3E'http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d1b2a'/><text y='.9em' font-size='80' x='10'>AW</text></svg>">
-<link rel="manifest" href="data:application/json,{%22name%22:%22תוכנית%20אימונים%22,%22short_name%22:%22אימונים%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22%230d1b2a%22,%22theme_color%22:%22%230d1b2a%22,%22icons%22:[{%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230d1b2a'/%3E%3Crect x='15' y='45' width='70' height='10' rx='5' fill='%231D9E75'/%3E%3Crect x='10' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3Crect x='75' y='35' width='15' height='30' rx='4' fill='%231D9E75'/%3E%3C/svg%3E'http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230d1b2a'/><text y='.9em' font-size='80' x='10'>AW</text></svg>%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22}]}">
-<link rel="manifest" href="/workout/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0d1b2a;--blue:#1a4f7a;--accent:#e8a020;--light:#f0f4f8;--white:#fff;--text:#1a2332;--muted:#6b7e94;--green:#1D9E75;--red:#c0392b}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Heebo',sans-serif;background:var(--light);color:var(--text);padding-bottom:3rem}
-header{background:var(--navy);color:white;padding:16px;text-align:center}
+header{background:var(--navy);color:white;padding:16px;text-align:center;position:relative}
 header h1{font-size:1.2rem;font-weight:800}
 header p{font-size:.72rem;color:#8fa8c0;margin-top:3px}
 .tabs{display:flex;background:var(--navy);border-top:1px solid #1e3350;position:sticky;top:0;z-index:100}
@@ -28,7 +24,7 @@ header p{font-size:.72rem;color:#8fa8c0;margin-top:3px}
 
 /* SCHEDULE */
 .wk-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:16px}
-.wk-cell{border-radius:14px;padding:12px 2px 10px;text-align:center;border-top:4px solid #e2eaf2;background:white;box-shadow:0 2px 6px rgba(0,0,0,.08);transition:transform .1s}
+.wk-cell{border-radius:14px;padding:12px 2px 10px;text-align:center;border-top:4px solid #e2eaf2;background:white;box-shadow:0 2px 6px rgba(0,0,0,.08)}
 .wk-cell.s{border-top-color:#378ADD;background:linear-gradient(180deg,#f0f6ff 0%,white 60%)}
 .wk-cell.c{border-top-color:var(--green);background:linear-gradient(180deg,#f0faf5 0%,white 60%)}
 .wk-cell .wn{font-size:.6rem;font-weight:700;color:var(--muted);margin-bottom:6px;line-height:1.3}
@@ -42,11 +38,10 @@ header p{font-size:.72rem;color:#8fa8c0;margin-top:3px}
 .tip-badge.nutrition{background:rgba(29,158,117,.25);color:#5dd9a8}
 .tip-date{font-size:.6rem;color:#8fa8c0}
 .tip-text{font-size:.82rem;font-weight:600;color:white;line-height:1.6}
-.note b{color:var(--text)}
 
-/* CARDIO TABLE */
-.ctbl{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;font-size:.76rem;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:12px}
+/* CARDIO */
 .run-timer-card{background:linear-gradient(135deg,#0d1b2a 0%,#1a3a5c 100%);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 4px 16px rgba(13,27,42,.3)}
+.ctbl{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;font-size:.76rem;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:12px}
 .ctbl th{background:var(--navy);color:white;padding:10px 8px;text-align:center;font-size:.68rem}
 .ctbl td{padding:10px 8px;text-align:center;border-bottom:1px solid #f0f4f8}
 .ctbl tr.now td{background:#fff8e8;font-weight:700;color:#7a5000}
@@ -91,7 +86,7 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
 .rlbl b{display:block;font-size:.8rem}
 .rstop{font-size:.7rem;font-weight:700;color:#7a3a00;background:none;border:1px solid var(--accent);border-radius:6px;padding:5px 10px;cursor:pointer}
 
-/* PLANK */
+/* PLANK OVERLAY */
 .plov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:999;align-items:center;justify-content:center;flex-direction:column;text-align:center}
 .plov.on{display:flex}
 .plph{font-size:.95rem;font-weight:700;letter-spacing:2px;margin-bottom:8px}
@@ -151,17 +146,14 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
 .rsv{font-size:.88rem;font-weight:800}.rsl{font-size:.6rem;color:var(--muted);margin-top:1px}
 .empty{text-align:center;color:#8fa8c0;padding:2rem;font-size:.84rem}
 
-/* ATTENDANCE */
-.att-month{background:white;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.07)}
-.att-mhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.att-mtit{font-size:.85rem;font-weight:700}
-.att-mst{font-size:.72rem;color:var(--muted)}
-.att-leg{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;font-size:.68rem}
-.att-li{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:4px}
+/* MODALS */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:998;align-items:center;justify-content:center}
+.modal-box{background:white;border-radius:16px;padding:20px;width:88%;max-width:340px;font-family:'Heebo',sans-serif}
 </style>
 </head>
 <body>
 
+<!-- PLANK OVERLAY -->
 <div class="plov" id="plov">
   <div style="padding:20px;width:100%;max-width:360px;text-align:center">
     <div class="plph work" id="plph">עבודה</div>
@@ -172,11 +164,56 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
   </div>
 </div>
 
-<header>
-  <h1>&#x1F4AA; תוכנית אימונים</h1>
-  <p style="color:#8fa8c0;font-size:.72rem;margin-top:2px">גבר &middot; <span id="age-lbl">35</span> &middot; Full Body</p>
+<!-- WEIGHT EDIT MODAL -->
+<div class="modal" id="wt-edit-modal">
+  <div class="modal-box">
+    <div style="font-size:.95rem;font-weight:800;color:#0d1b2a;margin-bottom:16px;text-align:center">⚖️ עדכון משקל</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div>
+        <div class="flbl">משקל נוכחי (ק"ג)</div>
+        <input id="wt-inp-cur" type="number" step="0.1" class="finput" style="font-size:1rem;font-weight:700;text-align:center" onclick="this.select()">
+      </div>
+      <div>
+        <div class="flbl">משקל יעד (ק"ג)</div>
+        <input id="wt-inp-goal" type="number" step="0.1" class="finput" style="font-size:1rem;font-weight:700;text-align:center" onclick="this.select()">
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+      <div>
+        <div class="flbl">גובה (ס"מ)</div>
+        <input id="wt-inp-height" type="number" step="1" class="finput" style="font-size:1rem;font-weight:700;text-align:center" onclick="this.select()">
+      </div>
+      <div>
+        <div class="flbl">תאריך לידה</div>
+        <input id="wt-inp-dob" type="date" class="finput" style="font-size:.82rem;font-weight:700">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button onclick="closeWtEdit()" style="flex:1;padding:11px;border:1px solid #d0dcea;border-radius:10px;background:#f0f4f8;font-family:'Heebo',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;color:#6b7e94">ביטול</button>
+      <button onclick="saveWt()" style="flex:2;padding:11px;border:none;border-radius:10px;background:#0d1b2a;color:white;font-family:'Heebo',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer">שמור ✓</button>
+    </div>
+  </div>
+</div>
 
-  <!-- WEIGHT TRACKER -->
+<!-- WEIGHT HISTORY MODAL -->
+<div class="modal" id="wt-hist-modal">
+  <div class="modal-box" style="max-height:80vh;overflow-y:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div style="font-size:.95rem;font-weight:800;color:#0d1b2a">📊 היסטוריית משקל</div>
+      <button onclick="closeWtHistory()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:#6b7e94">✕</button>
+    </div>
+    <div id="wt-hist-list"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <button id="wake-btn" onclick="toggleWake()" title="מניעת כיבוי מסך"
+    style="position:absolute;top:10px;left:10px;font-size:.68rem;font-weight:700;color:#8fa8c0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:4px 10px;cursor:pointer">
+    <span id="wake-icon">📵</span> מסך
+  </button>
+  <h1>💪 תוכנית אימונים</h1>
+  <p>גבר · <span id="age-lbl">35</span> · Full Body</p>
   <div id="wt-display" style="margin-top:12px">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
       <div style="text-align:right">
@@ -184,8 +221,8 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
         <div id="wt-cur-lbl" style="font-size:1.1rem;font-weight:800;color:white">103.5 ק"ג</div>
       </div>
       <div style="flex:1;margin:0 10px">
-        <div id="wt-bar-wrap" style="background:rgba(255,255,255,.15);border-radius:20px;height:8px;overflow:hidden">
-          <div id="wt-bar" style="height:100%;border-radius:20px;background:linear-gradient(90deg,#1D9E75,#5dd9a8);transition:width .6s ease;width:0%"></div>
+        <div style="background:rgba(255,255,255,.15);border-radius:20px;height:8px;overflow:hidden">
+          <div id="wt-bar" style="height:100%;border-radius:20px;background:linear-gradient(90deg,#1D9E75,#5dd9a8);transition:width .6s;width:0%"></div>
         </div>
         <div id="wt-pct-lbl" style="font-size:.6rem;color:#8fa8c0;text-align:center;margin-top:3px">0% מהיעד</div>
       </div>
@@ -194,388 +231,229 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
         <div id="wt-goal-lbl" style="font-size:1.1rem;font-weight:800;color:#5dd9a8">80 ק"ג</div>
       </div>
     </div>
-    <div id="wt-bmi-row" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:8px">
-      <div id="wt-bmi-badge" style="font-size:.7rem;font-weight:700;padding:3px 12px;border-radius:20px;background:rgba(255,255,255,.15);color:white"></div>
+    <div style="text-align:center;margin-bottom:8px">
+      <div id="wt-bmi-badge" style="display:inline-block;font-size:.7rem;font-weight:700;padding:3px 12px;border-radius:20px;background:rgba(255,255,255,.15);color:white"></div>
     </div>
     <div style="display:flex;gap:6px;justify-content:center">
-      <button onclick="openWtEdit()" style="font-size:.68rem;font-weight:700;color:#8fa8c0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;cursor:pointer">&#x270F; עדכן משקל</button>
-      <button onclick="openWtHistory()" style="font-size:.68rem;font-weight:700;color:#8fa8c0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;cursor:pointer">&#x1F4CA; היסטוריה</button>
+      <button onclick="openWtEdit()" style="font-size:.68rem;font-weight:700;color:#8fa8c0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;cursor:pointer">✏ עדכן משקל</button>
+      <button onclick="openWtHistory()" style="font-size:.68rem;font-weight:700;color:#8fa8c0;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 12px;cursor:pointer">📊 היסטוריה</button>
     </div>
   </div>
 </header>
 
-<!-- WEIGHT EDIT MODAL -->
-<div id="wt-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:998;align-items:center;justify-content:center">
-  <div style="background:white;border-radius:16px;padding:20px;width:88%;max-width:340px;font-family:'Heebo',sans-serif">
-    <div style="font-size:.95rem;font-weight:800;color:#0d1b2a;margin-bottom:16px;text-align:center">&#x2696; עדכון משקל</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
-      <div>
-        <div style="font-size:.72rem;font-weight:700;color:#6b7e94;margin-bottom:5px">משקל נוכחי (ק"ג)</div>
-        <input id="wt-inp-cur" type="number" step="0.1" style="width:100%;padding:10px 8px;border:2px solid #d0dcea;border-radius:10px;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;text-align:center" onclick="this.select()">
-      </div>
-      <div>
-        <div style="font-size:.72rem;font-weight:700;color:#6b7e94;margin-bottom:5px">משקל יעד (ק"ג)</div>
-        <input id="wt-inp-goal" type="number" step="0.1" style="width:100%;padding:10px 8px;border:2px solid #d0dcea;border-radius:10px;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;text-align:center" onclick="this.select()">
-      </div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
-      <div>
-        <div style="font-size:.72rem;font-weight:700;color:#6b7e94;margin-bottom:5px">גובה (ס"מ)</div>
-        <input id="wt-inp-height" type="number" step="1" style="width:100%;padding:10px 8px;border:2px solid #d0dcea;border-radius:10px;font-family:'Heebo',sans-serif;font-size:1rem;font-weight:700;text-align:center" onclick="this.select()">
-      </div>
-      <div>
-        <div style="font-size:.72rem;font-weight:700;color:#6b7e94;margin-bottom:5px">תאריך לידה</div>
-        <input id="wt-inp-dob" type="date" style="width:100%;padding:9px 6px;border:2px solid #d0dcea;border-radius:10px;font-family:'Heebo',sans-serif;font-size:.82rem;font-weight:700;text-align:center">
-      </div>
-    </div>
-    <div style="display:flex;gap:8px">
-      <button onclick="closeWtEdit()" style="flex:1;padding:11px;border:1px solid #d0dcea;border-radius:10px;background:#f0f4f8;font-family:'Heebo',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;color:#6b7e94">ביטול</button>
-      <button onclick="saveWt()" style="flex:2;padding:11px;border:none;border-radius:10px;background:#0d1b2a;color:white;font-family:'Heebo',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer">שמור &#x2713;</button>
-    </div>
-  </div>
-</div>
-
-<!-- WEIGHT HISTORY MODAL -->
-<div id="wt-hist-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:998;align-items:center;justify-content:center">
-  <div style="background:white;border-radius:16px;padding:20px;width:88%;max-width:340px;max-height:80vh;overflow-y:auto;font-family:'Heebo',sans-serif">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div style="font-size:.95rem;font-weight:800;color:#0d1b2a">&#x1F4CA; היסטוריית משקל</div>
-      <button onclick="closeWtHistory()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:#6b7e94">&#x2715;</button>
-    </div>
-    <div id="wt-hist-list"></div>
-  </div>
-</div>
-
+<!-- TABS -->
 <div class="tabs">
-  <div class="tab on" id="t0" onclick="sw(0)">&#x1F4C5; לוח</div>
-  <div class="tab"    id="t1" onclick="sw(1)">&#x1F4AA; כוח</div>
-  <div class="tab"    id="t2" onclick="sw(2)">&#x1F3C3; ריצה</div>
-  <div class="tab"    id="t3" onclick="sw(3)">&#x1F4C8; מעקב</div>
+  <div class="tab on" id="t0" onclick="sw(0)">📅 לוח</div>
+  <div class="tab"    id="t1" onclick="sw(1)">💪 כוח</div>
+  <div class="tab"    id="t2" onclick="sw(2)">🏃 ריצה</div>
+  <div class="tab"    id="t3" onclick="sw(3)">📈 מעקב</div>
 </div>
 
 <!-- ===== SCHEDULE ===== -->
-<div class="sec on" id="s0">
-<div class="pg">
+<div class="sec on" id="s0"><div class="pg">
   <div class="tip-card">
     <div class="tip-header">
-      <span class="tip-badge" id="tip-badge">&#x1F4AA; כושר</span>
+      <span class="tip-badge fitness" id="tip-badge">💪 טיפ כושר</span>
       <span class="tip-date" id="tip-date"></span>
     </div>
     <div class="tip-text" id="tip-text">טוען טיפ יומי...</div>
   </div>
   <div style="font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">שבוע א'</div>
-  <div class="wk-grid" style="margin-bottom:10px">
-    <div class="wk-cell s"><div class="wn">ראשון</div><div class="wi">&#x1F3CB;</div><div class="wt">כוח</div></div>
-    <div class="wk-cell"><div class="wn">שני</div><div class="wi">&#x1F634;</div><div class="wt">מנוחה</div></div>
-    <div class="wk-cell c"><div class="wn">שלישי</div><div class="wi">&#x1F3C3;</div><div class="wt">ריצה</div></div>
-    <div class="wk-cell"><div class="wn">רביעי</div><div class="wi">&#x1F634;</div><div class="wt">מנוחה</div></div>
-    <div class="wk-cell s"><div class="wn">חמישי</div><div class="wi">&#x1F3CB;</div><div class="wt">כוח</div></div>
-    <div class="wk-cell"><div class="wn">שישי</div><div class="wi">&#x1F634;</div><div class="wt">מנוחה</div></div>
-    <div class="wk-cell c"><div class="wn">שבת</div><div class="wi">&#x1F3C3;</div><div class="wt">ריצה</div></div>
+  <div class="wk-grid">
+    <div class="wk-cell s"><div class="wn">ראשון</div><span class="wi">🏋</span><div class="wt">כוח</div></div>
+    <div class="wk-cell">  <div class="wn">שני</div>   <span class="wi">😴</span><div class="wt">מנוחה</div></div>
+    <div class="wk-cell c"><div class="wn">שלישי</div><span class="wi">🏃</span><div class="wt">ריצה</div></div>
+    <div class="wk-cell">  <div class="wn">רביעי</div><span class="wi">😴</span><div class="wt">מנוחה</div></div>
+    <div class="wk-cell s"><div class="wn">חמישי</div><span class="wi">🏋</span><div class="wt">כוח</div></div>
+    <div class="wk-cell">  <div class="wn">שישי</div>  <span class="wi">😴</span><div class="wt">מנוחה</div></div>
+    <div class="wk-cell c"><div class="wn">שבת</div>   <span class="wi">🏃</span><div class="wt">ריצה</div></div>
   </div>
   <div style="font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">שבוע ב' — ואז חוזר לשבוע א'</div>
-  <div class="wk-grid" style="margin-bottom:16px">
-    <div class="wk-cell"><div class="wn">ראשון</div><div class="wi">&#x1F634;</div><div class="wt">מנוחה</div></div>
-    <div class="wk-cell s"><div class="wn">שני</div><div class="wi">&#x1F3CB;</div><div class="wt">כוח</div></div>
-    <div class="wk-cell"><div class="wn">שלישי</div><div class="wi">&#x1F634;</div><div class="wt">מנוחה</div></div>
-    <div class="wk-cell c"><div class="wn">רביעי</div><div class="wi">&#x1F3C3;</div><div class="wt">ריצה</div></div>
-    <div class="wk-cell"><div class="wn">חמישי</div><div class="wi">&#x1F634;</div><div class="wt">מנוחה</div></div>
-    <div class="wk-cell s"><div class="wn">שישי</div><div class="wi">&#x1F3CB;</div><div class="wt">כוח</div></div>
-    <div class="wk-cell"><div class="wn">שבת</div><div class="wi">&#x1F634;</div><div class="wt">מנוחה</div></div>
+  <div class="wk-grid">
+    <div class="wk-cell">  <div class="wn">ראשון</div><span class="wi">😴</span><div class="wt">מנוחה</div></div>
+    <div class="wk-cell s"><div class="wn">שני</div>   <span class="wi">🏋</span><div class="wt">כוח</div></div>
+    <div class="wk-cell">  <div class="wn">שלישי</div><span class="wi">😴</span><div class="wt">מנוחה</div></div>
+    <div class="wk-cell c"><div class="wn">רביעי</div><span class="wi">🏃</span><div class="wt">ריצה</div></div>
+    <div class="wk-cell">  <div class="wn">חמישי</div><span class="wi">😴</span><div class="wt">מנוחה</div></div>
+    <div class="wk-cell s"><div class="wn">שישי</div>  <span class="wi">🏋</span><div class="wt">כוח</div></div>
+    <div class="wk-cell">  <div class="wn">שבת</div>   <span class="wi">😴</span><div class="wt">מנוחה</div></div>
   </div>
-  <div class="note"><b>מחזור של 14 ימים</b> &mdash; תמיד יום מנוחה בין כל שני אימונים. שבת הוא יום ריצה לגיטימי.</div>
-  <div class="note"><b>תזונה</b> &mdash; מינימום 1.6&ndash;2 גרם חלבון לכל ק"ג. פחמימות לפני ואחרי ריצה.</div>
-</div>
-</div>
+  <div class="note"><b>מחזור של 14 ימים</b> — תמיד יום מנוחה בין כל שני אימונים.</div>
+  <div class="note"><b>תזונה</b> — מינימום 1.6–2 גרם חלבון לכל ק"ג. פחמימות לפני ואחרי ריצה.</div>
+</div></div>
 
 <!-- ===== STRENGTH ===== -->
-<div class="sec" id="s1">
-<div class="pg">
+<div class="sec" id="s1"><div class="pg">
 
-<div class="ghdr"><span class="glbl">&#x1F9B5; רגליים</span><button class="gbtn" onclick="openGrp('gl',this)">פתח הכל</button></div>
+<div class="ghdr"><span class="glbl">🦵 רגליים</span><button class="gbtn" onclick="openGrp('gl',this)">פתח הכל</button></div>
 <div id="gl">
-<div class="card" id="c1">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c1',event)">&#x2713;</div>
-    <div class="ctit"><h3>לחיצת רגליים</h3><small>Leg Press</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">41 KG</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> קוואדריצפס, גלוטאוס, המסטרינג</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/45-degree-leg-press.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i1',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br1" onclick="event.stopPropagation();doRest('r1','c1',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c1">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c1',event)">✓</div><div class="ctit"><h3>לחיצת רגליים</h3><small>Leg Press</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">41 KG</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> קוואדריצפס, גלוטאוס, המסטרינג</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/45-degree-leg-press.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i1',this)">ℹ מה זה?</button><button class="brest" id="br1" onclick="event.stopPropagation();doRest('r1','c1',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r1"><div class="rnum" id="rn1">60</div><div class="rlbl"><b id="rl1">סט 1/3</b><span id="rs1"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r1','br1',3)">עצור</button></div>
+      <div class="ibox" id="i1">יושבים ודוחפים פלטפורמה קדימה. בטוח יותר מסקוואט. לשמור גב צמוד למשענת.</div>
     </div>
-    <div class="rbox" id="r1"><div class="rnum" id="rn1">60</div><div class="rlbl"><b id="rl1">סט 1/3</b><span id="rs1">60 שניות</span></div><button class="rstop" onclick="cancelRest('r1','br1',3)">עצור</button></div>
-    <div class="ibox" id="i1">יושבים ודוחפים פלטפורמה קדימה. בטוח יותר מסקוואט. לשמור גב צמוד למשענת.</div>
   </div>
-</div>
-<div class="card" id="c2">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c2',event)">&#x2713;</div>
-    <div class="ctit"><h3>כפיפת ברך במכונה</h3><small>Leg Curl</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">36 KG</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> המסטרינג</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/leg-curl.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i2',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br2" onclick="event.stopPropagation();doRest('r2','c2',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c2">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c2',event)">✓</div><div class="ctit"><h3>כפיפת ברך במכונה</h3><small>Leg Curl</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">36 KG</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> המסטרינג</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/leg-curl.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i2',this)">ℹ מה זה?</button><button class="brest" id="br2" onclick="event.stopPropagation();doRest('r2','c2',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r2"><div class="rnum" id="rn2">60</div><div class="rlbl"><b id="rl2">סט 1/3</b><span id="rs2"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r2','br2',3)">עצור</button></div>
+      <div class="ibox" id="i2">שוכבים ומכופפים ברך נגד התנגדות. מבודד המסטרינג — חיוני לאיזון מול Leg Press.</div>
     </div>
-    <div class="rbox" id="r2"><div class="rnum" id="rn2">60</div><div class="rlbl"><b id="rl2">סט 1/3</b><span id="rs2">60 שניות</span></div><button class="rstop" onclick="cancelRest('r2','br2',3)">עצור</button></div>
-    <div class="ibox" id="i2">שוכבים ומכופפים ברך נגד התנגדות. מבודד המסטרינג — חיוני לאיזון מול ה-Leg Press.</div>
   </div>
-</div>
-<div class="card" id="c3">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c3',event)">&#x2713;</div>
-    <div class="ctit"><h3>עליות תאומים</h3><small>Calf Raise</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">15&ndash;20</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> גסטרוקנמיוס ו-Soleus</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/standing-machine-calf-raise" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i3',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br3" onclick="event.stopPropagation();doRest('r3','c3',2,this)">&#x23F1; סיים סט (1/2)</button>
+  <div class="card" id="c3">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c3',event)">✓</div><div class="ctit"><h3>עליות תאומים</h3><small>Calf Raise</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">15–20</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> גסטרוקנמיוס ו-Soleus</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/standing-machine-calf-raise" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i3',this)">ℹ מה זה?</button><button class="brest" id="br3" onclick="event.stopPropagation();doRest('r3','c3',2,this)">⏱ סיים סט (1/2)</button></div>
+      <div class="rbox" id="r3"><div class="rnum" id="rn3">60</div><div class="rlbl"><b id="rl3">סט 1/2</b><span id="rs3"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r3','br3',2)">עצור</button></div>
+      <div class="ibox" id="i3">עולים על קצות האצבעות. לעצור קצר בפסגה לתוצאה מיטבית.</div>
     </div>
-    <div class="rbox" id="r3"><div class="rnum" id="rn3">60</div><div class="rlbl"><b id="rl3">סט 1/2</b><span id="rs3">60 שניות</span></div><button class="rstop" onclick="cancelRest('r3','br3',2)">עצור</button></div>
-    <div class="ibox" id="i3">עולים על קצות האצבעות. לעצור קצר בפסגה לתוצאה מיטבית.</div>
   </div>
-</div>
 </div>
 
-<div class="ghdr"><span class="glbl">&#x1F3CB; גב</span><button class="gbtn" onclick="openGrp('gb',this)">פתח הכל</button></div>
+<div class="ghdr"><span class="glbl">🏋 גב</span><button class="gbtn" onclick="openGrp('gb',this)">פתח הכל</button></div>
 <div id="gb">
-<div class="card" id="c4">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c4',event)">&#x2713;</div>
-    <div class="ctit"><h3>משיכה בפולי עליון</h3><small>Lat Pulldown</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">34 KG</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> לטיסימוס דורסי (גב רחב)</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/lat-pull-down.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i4',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br4" onclick="event.stopPropagation();doRest('r4','c4',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c4">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c4',event)">✓</div><div class="ctit"><h3>משיכה בפולי עליון</h3><small>Lat Pulldown</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">34 KG</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> לטיסימוס דורסי (גב רחב)</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/lat-pull-down.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i4',this)">ℹ מה זה?</button><button class="brest" id="br4" onclick="event.stopPropagation();doRest('r4','c4',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r4"><div class="rnum" id="rn4">60</div><div class="rlbl"><b id="rl4">סט 1/3</b><span id="rs4"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r4','br4',3)">עצור</button></div>
+      <div class="ibox" id="i4">מושכים מוט רחב מלמעלה לחזה. למשוך עם המרפקים, לא הידיים.</div>
     </div>
-    <div class="rbox" id="r4"><div class="rnum" id="rn4">60</div><div class="rlbl"><b id="rl4">סט 1/3</b><span id="rs4">60 שניות</span></div><button class="rstop" onclick="cancelRest('r4','br4',3)">עצור</button></div>
-    <div class="ibox" id="i4">מושכים מוט רחב מלמעלה לחזה. בונה צורת V. למשוך עם המרפקים, לא הידיים.</div>
   </div>
-</div>
-<div class="card" id="c5">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c5',event)">&#x2713;</div>
-    <div class="ctit"><h3>חתירה בישיבה בכבל</h3><small>Seated Cable Row</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">התחל קל</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> גב אמצעי, Rhomboids, Traps</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/seated-row.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i5',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br5" onclick="event.stopPropagation();doRest('r5','c5',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c5">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c5',event)">✓</div><div class="ctit"><h3>חתירה בישיבה בכבל</h3><small>Seated Cable Row</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">התחל קל</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> גב אמצעי, Rhomboids, Traps</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/seated-row.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i5',this)">ℹ מה זה?</button><button class="brest" id="br5" onclick="event.stopPropagation();doRest('r5','c5',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r5"><div class="rnum" id="rn5">60</div><div class="rlbl"><b id="rl5">סט 1/3</b><span id="rs5"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r5','br5',3)">עצור</button></div>
+      <div class="ibox" id="i5">מושכים ידית כבל אופקית לכיוון הבטן. חיוני ליציבה ולמניעת כאבי גב.</div>
     </div>
-    <div class="rbox" id="r5"><div class="rnum" id="rn5">60</div><div class="rlbl"><b id="rl5">סט 1/3</b><span id="rs5">60 שניות</span></div><button class="rstop" onclick="cancelRest('r5','br5',3)">עצור</button></div>
-    <div class="ibox" id="i5">מושכים ידית כבל אופקית לכיוון הבטן. חיוני ליציבה ולמניעת כאבי גב.</div>
   </div>
-</div>
 </div>
 
-<div class="ghdr"><span class="glbl">&#x1F455; חזה</span><button class="gbtn" onclick="openGrp('gc',this)">פתח הכל</button></div>
+<div class="ghdr"><span class="glbl">👕 חזה</span><button class="gbtn" onclick="openGrp('gc',this)">פתח הכל</button></div>
 <div id="gc">
-<div class="card" id="c6">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c6',event)">&#x2713;</div>
-    <div class="ctit"><h3>לחיצת חזה במכונה</h3><small>Machine Chest Press</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">36 KG</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> פקטורליס מייג'ור, טריצפ, כתף קדמי</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/hammer-strength-bench-press.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i6',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br6" onclick="event.stopPropagation();doRest('r6','c6',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c6">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c6',event)">✓</div><div class="ctit"><h3>לחיצת חזה במכונה</h3><small>Machine Chest Press</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">36 KG</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> פקטורליס מייג'ור, טריצפ, כתף קדמי</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/hammer-strength-bench-press.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i6',this)">ℹ מה זה?</button><button class="brest" id="br6" onclick="event.stopPropagation();doRest('r6','c6',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r6"><div class="rnum" id="rn6">60</div><div class="rlbl"><b id="rl6">סט 1/3</b><span id="rs6"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r6','br6',3)">עצור</button></div>
+      <div class="ibox" id="i6">תרגיל <b>דחיפה</b> — דוחפים קדימה עד יישור מרפקים. <b>שונה לחלוטין מהפרפר!</b></div>
     </div>
-    <div class="rbox" id="r6"><div class="rnum" id="rn6">60</div><div class="rlbl"><b id="rl6">סט 1/3</b><span id="rs6">60 שניות</span></div><button class="rstop" onclick="cancelRest('r6','br6',3)">עצור</button></div>
-    <div class="ibox" id="i6">תרגיל <b>דחיפה</b> &mdash; דוחפים קדימה עד יישור מרפקים. כל החזה + טריצפ. <b>שונה לחלוטין מהפרפר!</b></div>
   </div>
-</div>
-<div class="card" id="c7">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c7',event)">&#x2713;</div>
-    <div class="ctit"><h3>פרפר חזה במכונה</h3><small>Pec Deck Fly</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">12&ndash;15</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">מתאים</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> חזה פנימי ותחתון</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/pec-dec.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i7',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br7" onclick="event.stopPropagation();doRest('r7','c7',2,this)">&#x23F1; סיים סט (1/2)</button>
+  <div class="card" id="c7">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c7',event)">✓</div><div class="ctit"><h3>פרפר חזה במכונה</h3><small>Pec Deck Fly</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">12–15</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">מתאים</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> חזה פנימי ותחתון</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/pec-dec.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i7',this)">ℹ מה זה?</button><button class="brest" id="br7" onclick="event.stopPropagation();doRest('r7','c7',2,this)">⏱ סיים סט (1/2)</button></div>
+      <div class="rbox" id="r7"><div class="rnum" id="rn7">60</div><div class="rlbl"><b id="rl7">סט 1/2</b><span id="rs7"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r7','br7',2)">עצור</button></div>
+      <div class="ibox" id="i7">תרגיל <b>קירוב</b> — ידיים נסגרות מהצדדים. <b>שונה מהלחיצה!</b></div>
     </div>
-    <div class="rbox" id="r7"><div class="rnum" id="rn7">60</div><div class="rlbl"><b id="rl7">סט 1/2</b><span id="rs7">60 שניות</span></div><button class="rstop" onclick="cancelRest('r7','br7',2)">עצור</button></div>
-    <div class="ibox" id="i7">תרגיל <b>קירוב</b> &mdash; ידיים נסגרות מהצדדים. מבודד חזה פנימי. <b>שונה מהלחיצה!</b></div>
   </div>
-</div>
 </div>
 
-<div class="ghdr"><span class="glbl">&#x1F4AA; כתפיים</span><button class="gbtn" onclick="openGrp('gs',this)">פתח הכל</button></div>
+<div class="ghdr"><span class="glbl">💪 כתפיים</span><button class="gbtn" onclick="openGrp('gs',this)">פתח הכל</button></div>
 <div id="gs">
-<div class="card" id="c8">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c8',event)">&#x2713;</div>
-    <div class="ctit"><h3>לחיצת כתפיים במכונה</h3><small>Machine Shoulder Press</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">התחל קל</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> דלטואיד קדמי ואמצעי</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/shoulders" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i8',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br8" onclick="event.stopPropagation();doRest('r8','c8',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c8">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c8',event)">✓</div><div class="ctit"><h3>לחיצת כתפיים במכונה</h3><small>Machine Shoulder Press</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">התחל קל</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> דלטואיד קדמי ואמצעי</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/shoulders" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i8',this)">ℹ מה זה?</button><button class="brest" id="br8" onclick="event.stopPropagation();doRest('r8','c8',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r8"><div class="rnum" id="rn8">60</div><div class="rlbl"><b id="rl8">סט 1/3</b><span id="rs8"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r8','br8',3)">עצור</button></div>
+      <div class="ibox" id="i8">דוחפים ישר למעלה בישיבה. לשמור גב ישר.</div>
     </div>
-    <div class="rbox" id="r8"><div class="rnum" id="rn8">60</div><div class="rlbl"><b id="rl8">סט 1/3</b><span id="rs8">60 שניות</span></div><button class="rstop" onclick="cancelRest('r8','br8',3)">עצור</button></div>
-    <div class="ibox" id="i8">דוחפים ישר למעלה בישיבה. לשמור גב ישר.</div>
   </div>
-</div>
-<div class="card" id="c9">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c9',event)">&#x2713;</div>
-    <div class="ctit"><h3>הרמות צד עם דמבלים</h3><small>Lateral Raise</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">12&ndash;15</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">4&ndash;6 KG</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> דלטואיד אמצעי</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/dumbbell-lateral-raise.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i9',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br9" onclick="event.stopPropagation();doRest('r9','c9',2,this)">&#x23F1; סיים סט (1/2)</button>
+  <div class="card" id="c9">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c9',event)">✓</div><div class="ctit"><h3>הרמות צד עם דמבלים</h3><small>Lateral Raise</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">12–15</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">4–6 KG</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> דלטואיד אמצעי</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/dumbbell-lateral-raise.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i9',this)">ℹ מה זה?</button><button class="brest" id="br9" onclick="event.stopPropagation();doRest('r9','c9',2,this)">⏱ סיים סט (1/2)</button></div>
+      <div class="rbox" id="r9"><div class="rnum" id="rn9">60</div><div class="rlbl"><b id="rl9">סט 1/2</b><span id="rs9"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r9','br9',2)">עצור</button></div>
+      <div class="ibox" id="i9">מרימים לצדדים עד גובה הכתפיים. משקל קל — הטכניקה חשובה יותר.</div>
     </div>
-    <div class="rbox" id="r9"><div class="rnum" id="rn9">60</div><div class="rlbl"><b id="rl9">סט 1/2</b><span id="rs9">60 שניות</span></div><button class="rstop" onclick="cancelRest('r9','br9',2)">עצור</button></div>
-    <div class="ibox" id="i9">מרימים לצדדים עד גובה הכתפיים. משקל קל — הטכניקה חשובה יותר.</div>
   </div>
-</div>
 </div>
 
-<div class="ghdr"><span class="glbl">&#x1F4AA; ידיים</span><button class="gbtn" onclick="openGrp('ga',this)">פתח הכל</button></div>
+<div class="ghdr"><span class="glbl">💪 ידיים</span><button class="gbtn" onclick="openGrp('ga',this)">פתח הכל</button></div>
 <div id="ga">
-<div class="card" id="c10">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c10',event)">&#x2713;</div>
-    <div class="ctit"><h3>כפיפת מרפקים בשיפוע</h3><small>Incline Dumbbell Curl</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">7 KG</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> ביצפ</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/incline-dumbbell-curl.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i10',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br10" onclick="event.stopPropagation();doRest('r10','c10',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c10">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c10',event)">✓</div><div class="ctit"><h3>כפיפת מרפקים בשיפוע</h3><small>Incline Dumbbell Curl</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">7 KG</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> ביצפ</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/incline-dumbbell-curl.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i10',this)">ℹ מה זה?</button><button class="brest" id="br10" onclick="event.stopPropagation();doRest('r10','c10',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r10"><div class="rnum" id="rn10">60</div><div class="rlbl"><b id="rl10">סט 1/3</b><span id="rs10"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r10','br10',3)">עצור</button></div>
+      <div class="ibox" id="i10">ספסל נטוי מאריך את הביצפ — יעיל יותר מ-Curl רגיל.</div>
     </div>
-    <div class="rbox" id="r10"><div class="rnum" id="rn10">60</div><div class="rlbl"><b id="rl10">סט 1/3</b><span id="rs10">60 שניות</span></div><button class="rstop" onclick="cancelRest('r10','br10',3)">עצור</button></div>
-    <div class="ibox" id="i10">ספסל נטוי מאריך את הביצפ &mdash; יעיל יותר מ-Curl רגיל.</div>
   </div>
-</div>
-<div class="card" id="c11">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c11',event)">&#x2713;</div>
-    <div class="ctit"><h3>דחיפת טריצפ בחבל</h3><small>Tricep Rope Pushdown</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10&ndash;12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">התחל קל</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> טריצפ (2/3 מנפח הזרוע)</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/rope-tricep-extension.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i11',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br11" onclick="event.stopPropagation();doRest('r11','c11',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c11">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c11',event)">✓</div><div class="ctit"><h3>דחיפת טריצפ בחבל</h3><small>Tricep Rope Pushdown</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">10–12</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">התחל קל</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> טריצפ (2/3 מנפח הזרוע)</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/rope-tricep-extension.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i11',this)">ℹ מה זה?</button><button class="brest" id="br11" onclick="event.stopPropagation();doRest('r11','c11',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r11"><div class="rnum" id="rn11">60</div><div class="rlbl"><b id="rl11">סט 1/3</b><span id="rs11"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r11','br11',3)">עצור</button></div>
+      <div class="ibox" id="i11">דוחפים חבל כלפי מטה. בסוף להפריד ידיות לצדדים לכיווץ מקסימלי.</div>
     </div>
-    <div class="rbox" id="r11"><div class="rnum" id="rn11">60</div><div class="rlbl"><b id="rl11">סט 1/3</b><span id="rs11">60 שניות</span></div><button class="rstop" onclick="cancelRest('r11','br11',3)">עצור</button></div>
-    <div class="ibox" id="i11">דוחפים חבל כלפי מטה. בסוף להפריד ידיות לצדדים לכיווץ מקסימלי.</div>
   </div>
-</div>
 </div>
 
-<div class="ghdr"><span class="glbl">&#x1F9D8; Core</span><button class="gbtn" onclick="openGrp('gco',this)">פתח הכל</button></div>
+<div class="ghdr"><span class="glbl">🧘 Core</span><button class="gbtn" onclick="openGrp('gco',this)">פתח הכל</button></div>
 <div id="gco">
-<div class="card" id="c12">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c12',event)">&#x2713;</div>
-    <div class="ctit"><h3>פלאנק</h3><small>Plank</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">60 שנ'</div><div class="sl">זמן</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> Core עמוק, יציבות עמוד שדרה</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/plank" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i12',this)">&#x2139; מה זה?</button>
-      <button class="bplank" onclick="event.stopPropagation();startPlank()">&#x23F1; התחל פלאנק</button>
+  <div class="card" id="c12">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c12',event)">✓</div><div class="ctit"><h3>פלאנק</h3><small>Plank</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">2</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">60 שנ'</div><div class="sl">זמן</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> Core עמוק, יציבות עמוד שדרה</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/plank" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i12',this)">ℹ מה זה?</button><button class="bplank" onclick="event.stopPropagation();startPlank()">⏱ התחל פלאנק</button></div>
+      <div class="ibox" id="i12">גוף ישר על אמות הידיים. טיימר מנהל 60שנ' עבודה + 60שנ' מנוחה × 2 סטים.</div>
     </div>
-    <div class="ibox" id="i12">גוף ישר על אמות הידיים. הטיימר מנהל 60 שנ' עבודה + 60 שנ' מנוחה &times; 2 סטים.</div>
   </div>
-</div>
-<div class="card" id="c13">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c13',event)">&#x2713;</div>
-    <div class="ctit"><h3>פינגווין</h3><small>Penguin Crunch</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">20&ndash;30</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> אובליקים (צד הבטן)</div>
-    <div class="brow">
-      <a class="bdemo" href="https://fitnessvolt.com/penguin-taps-guide/" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i13',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br13" onclick="event.stopPropagation();doRest('r13','c13',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c13">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c13',event)">✓</div><div class="ctit"><h3>פינגווין</h3><small>Penguin Crunch</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">20–30</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> אובליקים (צד הבטן)</div>
+      <div class="brow"><a class="bdemo" href="https://fitnessvolt.com/penguin-taps-guide/" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i13',this)">ℹ מה זה?</button><button class="brest" id="br13" onclick="event.stopPropagation();doRest('r13','c13',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r13"><div class="rnum" id="rn13">60</div><div class="rlbl"><b id="rl13">סט 1/3</b><span id="rs13"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r13','br13',3)">עצור</button></div>
+      <div class="ibox" id="i13">שוכבים, ברכיים כפופות, מגיעים לסירוגין לכל עקב. מבודד אובליקים.</div>
     </div>
-    <div class="rbox" id="r13"><div class="rnum" id="rn13">60</div><div class="rlbl"><b id="rl13">סט 1/3</b><span id="rs13">60 שניות</span></div><button class="rstop" onclick="cancelRest('r13','br13',3)">עצור</button></div>
-    <div class="ibox" id="i13">שוכבים, ברכיים כפופות, מגיעים לסירוגין לכל עקב. מבודד אובליקים.</div>
   </div>
-</div>
-<div class="card" id="c14">
-  <div class="chead" onclick="toggleCard(this)">
-    <div class="chk" onclick="manDone('c14',event)">&#x2713;</div>
-    <div class="ctit"><h3>הרמת רגליים תלויה</h3><small>Hanging Leg Raise</small></div>
-    <span class="carr">&#9660;</span>
-  </div>
-  <div class="cbody">
-    <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">12&ndash;15</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
-    <div class="muscle"><b>שרירים:</b> בטן תחתונה, Hip Flexors</div>
-    <div class="brow">
-      <a class="bdemo" href="https://www.muscleandstrength.com/exercises/hanging-leg-raise.html" target="_blank" onclick="event.stopPropagation()">הדגמה &#x2197;</a>
-      <button class="binfo" onclick="event.stopPropagation();togI('i14',this)">&#x2139; מה זה?</button>
-      <button class="brest" id="br14" onclick="event.stopPropagation();doRest('r14','c14',3,this)">&#x23F1; סיים סט (1/3)</button>
+  <div class="card" id="c14">
+    <div class="chead" onclick="toggleCard(this)"><div class="chk" onclick="manDone('c14',event)">✓</div><div class="ctit"><h3>הרמת רגליים תלויה</h3><small>Hanging Leg Raise</small></div><span class="carr">▾</span></div>
+    <div class="cbody">
+      <div class="stats"><div class="stat"><div class="sv">3</div><div class="sl">סטים</div></div><div class="stat"><div class="sv">12–15</div><div class="sl">חזרות</div></div><div class="stat"><div class="sv">גוף</div><div class="sl">משקל</div></div></div>
+      <div class="muscle"><b>שרירים:</b> בטן תחתונה, Hip Flexors</div>
+      <div class="brow"><a class="bdemo" href="https://www.muscleandstrength.com/exercises/hanging-leg-raise.html" target="_blank" onclick="event.stopPropagation()">הדגמה ↗</a><button class="binfo" onclick="event.stopPropagation();togI('i14',this)">ℹ מה זה?</button><button class="brest" id="br14" onclick="event.stopPropagation();doRest('r14','c14',3,this)">⏱ סיים סט (1/3)</button></div>
+      <div class="rbox" id="r14"><div class="rnum" id="rn14">60</div><div class="rlbl"><b id="rl14">סט 1/3</b><span id="rs14"> 60 שניות</span></div><button class="rstop" onclick="cancelRest('r14','br14',3)">עצור</button></div>
+      <div class="ibox" id="i14">תלויים ומרימים ברכיים לחזה. להתחיל כפופות ולהתקדם לרגליים ישרות.</div>
     </div>
-    <div class="rbox" id="r14"><div class="rnum" id="rn14">60</div><div class="rlbl"><b id="rl14">סט 1/3</b><span id="rs14">60 שניות</span></div><button class="rstop" onclick="cancelRest('r14','br14',3)">עצור</button></div>
-    <div class="ibox" id="i14">תלויים ומרימים ברכיים לחזה. להתחיל כפופות ולהתקדם לרגליים ישרות.</div>
   </div>
 </div>
-</div>
-
 </div></div>
 
 <!-- ===== CARDIO ===== -->
-<div class="sec" id="s2">
-<div class="pg">
-
+<div class="sec" id="s2"><div class="pg">
   <div class="run-timer-card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-size:.82rem;font-weight:800;color:white">&#x23F1; טיימר אינטרוולים</div>
+      <div style="font-size:.82rem;font-weight:800;color:white">⏱ טיימר אינטרוולים</div>
       <select id="rt-phase-sel" onchange="rtSelectPhase()" style="font-size:.7rem;font-weight:700;background:rgba(255,255,255,.15);color:white;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:4px 8px">
         <option value="0">שבועות 1-2</option>
         <option value="1">שבועות 3-4</option>
@@ -590,94 +468,86 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
       <div id="rt-rep-lbl" style="font-size:.75rem;color:rgba(255,255,255,.7);margin-top:4px"></div>
     </div>
     <div style="display:flex;gap:8px">
-      <button id="rt-start-btn" onclick="rtStart()" style="flex:2;padding:12px;border:none;border-radius:10px;background:#1D9E75;color:white;font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer">&#x25B6; התחל</button>
-      <button onclick="rtReset()" style="flex:1;padding:12px;border:1px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(255,255,255,.1);color:white;font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer">&#x21BA; איפוס</button>
+      <button id="rt-start-btn" onclick="rtStart()" style="flex:2;padding:12px;border:none;border-radius:10px;background:#1D9E75;color:white;font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer">▶ התחל</button>
+      <button onclick="rtReset()" style="flex:1;padding:12px;border:1px solid rgba(255,255,255,.3);border-radius:10px;background:rgba(255,255,255,.1);color:white;font-family:'Heebo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer">↺ איפוס</button>
     </div>
   </div>
 
   <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">תוכנית אינטרוולים</div>
-  <table class="ctbl" style="margin-bottom:12px">
+  <table class="ctbl">
     <thead><tr><th>שלב</th><th>ריצה</th><th>הליכה</th><th>חזרות</th><th>סה"כ</th></tr></thead>
     <tbody>
-      <tr id="rphase-0" class="now"><td>שבועות 1&ndash;2</td><td>2 דק'</td><td>2 דק'</td><td>x5</td><td>~20 דק'</td></tr>
-      <tr id="rphase-1"><td>שבועות 3&ndash;4</td><td>2 דק'</td><td>90 שנ'</td><td>x6</td><td>~21 דק'</td></tr>
-      <tr id="rphase-2"><td>שבועות 5&ndash;6</td><td>2.5 דק'</td><td>90 שנ'</td><td>x6</td><td>~24 דק'</td></tr>
-      <tr id="rphase-3"><td>שבועות 7&ndash;8</td><td>3 דק'</td><td>60 שנ'</td><td>x5</td><td>~20 דק'</td></tr>
+      <tr id="rphase-0" class="now"><td>שבועות 1–2</td><td>2 דק'</td><td>2 דק'</td><td>×5</td><td>~20 דק'</td></tr>
+      <tr id="rphase-1"><td>שבועות 3–4</td><td>2 דק'</td><td>90 שנ'</td><td>×6</td><td>~21 דק'</td></tr>
+      <tr id="rphase-2"><td>שבועות 5–6</td><td>2.5 דק'</td><td>90 שנ'</td><td>×6</td><td>~24 דק'</td></tr>
+      <tr id="rphase-3"><td>שבועות 7–8</td><td>3 דק'</td><td>60 שנ'</td><td>×5</td><td>~20 דק'</td></tr>
     </tbody>
   </table>
-  <div class="note"><b>התמקד בזמן</b> &mdash; 20&ndash;25 דקות. כשהשלב קל &mdash; עבור לבא.</div>
-  <div class="note"><b>כאב בברכיים?</b> &mdash; הוסף יום מנוחה לפני הריצה.</div>
+  <div class="note"><b>התמקד בזמן</b> — 20–25 דקות. כשהשלב קל — עבור לבא.</div>
+  <div class="note"><b>כאב בברכיים?</b> — הוסף יום מנוחה לפני הריצה.</div>
 
-  <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.4px">&#x1F4CA; סטטיסטיקות</div>
+  <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin:14px 0 8px;text-transform:uppercase;letter-spacing:.4px">📊 סטטיסטיקות</div>
   <div id="run-stats-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px"></div>
 
-  <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">&#x1F3C5; הישגים</div>
+  <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">🏅 הישגים</div>
   <div id="run-achievements" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"></div>
 
-  <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">&#x1F4C8; גרף קצב</div>
+  <div style="font-size:.7rem;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px">📈 גרף קצב</div>
   <div style="background:white;border-radius:12px;padding:14px;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:14px">
-    <canvas id="run-chart" height="140" style="width:100%;display:block"></canvas>
+    <canvas id="run-chart" height="140" style="width:100%;display:none"></canvas>
     <div id="run-chart-empty" style="text-align:center;color:#8fa8c0;padding:2rem;font-size:.84rem">רשום ריצות במעקב כדי לראות את ההתקדמות</div>
   </div>
-
-</div>
-</div>
+</div></div>
 
 <!-- ===== TRACKING ===== -->
-<div class="sec" id="s3">
-<div class="pg">
+<div class="sec" id="s3"><div class="pg">
   <div class="stabs">
-    <button class="stab on" id="st0" onclick="swTr(0)">&#x2705; נוכחות</button>
-    <button class="stab"    id="st1" onclick="swTr(1)">&#x1F4AA; כוח</button>
-    <button class="stab"    id="st2" onclick="swTr(2)">&#x1F3C3; ריצה</button>
+    <button class="stab on" id="st0" onclick="swTr(0)">✅ נוכחות</button>
+    <button class="stab"    id="st1" onclick="swTr(1)">💪 כוח</button>
+    <button class="stab"    id="st2" onclick="swTr(2)">🏃 ריצה</button>
   </div>
 
   <!-- attendance -->
   <div id="tr-a">
-    <p style="font-size:.74rem;color:#4a5568;margin-bottom:12px;line-height:1.6">
-      לחץ על יום כדי לסמן: <b>כוח</b> או <b>ריצה</b>.<br>
-      היום הבא יוגדר אוטומטית כמנוחה. לחיצה שנייה מסמנת פספסתי.
-    </p>
+    <p style="font-size:.74rem;color:#4a5568;margin-bottom:12px;line-height:1.6">לחץ על יום: <b>לחיצה 1</b>=כוח, <b>2</b>=ריצה, <b>3</b>=פספסתי, <b>4</b>=נקה.</p>
     <div id="att-cont"></div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;font-size:.7rem">
-      <span style="background:#e8f0fa;border:1px solid #aed6f1;color:#1a4f7a;padding:3px 10px;border-radius:20px;font-weight:700">&#x1F3CB; כוח</span>
-      <span style="background:#e8f4f0;border:1px solid #a9dfbf;color:#1a7a4f;padding:3px 10px;border-radius:20px;font-weight:700">&#x1F3C3; ריצה</span>
-      <span style="background:#f0f4f8;border:1px solid #d0dcea;color:#6b7e94;padding:3px 10px;border-radius:20px;font-weight:700">&#x1F634; מנוחה אוטו</span>
-      <span style="background:#fef0f0;border:1px solid #f5c0c0;color:#aa2222;padding:3px 10px;border-radius:20px;font-weight:700">&#x274C; פספסתי</span>
+      <span style="background:#e8f0fa;border:1px solid #aed6f1;color:#1a4f7a;padding:3px 10px;border-radius:20px;font-weight:700">🏋 כוח</span>
+      <span style="background:#e8f4f0;border:1px solid #a9dfbf;color:#1a7a4f;padding:3px 10px;border-radius:20px;font-weight:700">🏃 ריצה</span>
+      <span style="background:#f0f4f8;border:1px solid #d0dcea;color:#6b7e94;padding:3px 10px;border-radius:20px;font-weight:700">😴 מנוחה אוטו</span>
+      <span style="background:#fef0f0;border:1px solid #f5c0c0;color:#aa2222;padding:3px 10px;border-radius:20px;font-weight:700">❌ פספסתי</span>
     </div>
   </div>
 
   <!-- strength log -->
   <div id="tr-s" style="display:none">
     <div class="box">
-      <div class="bhdr">
-        <span class="glbl">&#x1F4DD; רישום אימון כוח</span>
-        <span class="badge" id="dbadge">טיוטה שמורה</span>
-      </div>
+      <div class="bhdr"><span class="glbl">📝 רישום אימון כוח</span><span class="badge" id="dbadge">טיוטה שמורה</span></div>
       <input type="date" id="log-date" class="finput" style="margin-bottom:12px">
       <div id="msg-ok" class="msg msg-ok">האימון נשמר!</div>
       <div id="msg-dr" class="msg msg-dr">הטיוטה נשמרה</div>
       <div id="log-form"></div>
       <div class="row2">
         <button class="sbtn sbtn-d" onclick="saveDraft()">שמור טיוטה</button>
-        <button class="sbtn sbtn-s" onclick="finishWO()">סיים אימון &#x2713;</button>
+        <button class="sbtn sbtn-s" onclick="finishWO()">סיים אימון ✓</button>
       </div>
     </div>
-    <div class="glbl" style="margin:0 0 10px">&#x1F4CA; היסטוריית כוח</div>
+    <div class="glbl" style="margin:0 0 10px">📊 היסטוריית כוח</div>
     <div id="hist-s"></div>
   </div>
 
   <!-- run log -->
   <div id="tr-r" style="display:none">
     <div class="box">
-      <div class="glbl" style="margin:0 0 12px">&#x1F4DD; רישום ריצה</div>
+      <div class="glbl" style="margin:0 0 12px">📝 רישום ריצה</div>
       <input type="date" id="run-date" class="finput" style="margin-bottom:10px">
       <div class="g2" style="margin-bottom:10px">
         <div><div class="flbl">מרחק (ק"מ)</div><input type="text" id="run-dist" class="finput" placeholder="2.1" onclick="this.select()"></div>
         <div><div class="flbl">זמן (דקות)</div><input type="text" id="run-time" class="finput" placeholder="22" onclick="this.select()"></div>
       </div>
       <div class="g2" style="margin-bottom:10px">
-        <div><div class="flbl">אינטרוולים</div>
+        <div>
+          <div class="flbl">אינטרוולים</div>
           <select id="run-ivl" class="finput">
             <option value="2/2">2 דק' / 2 דק'</option>
             <option value="2/1.5">2 דק' / 90 שנ'</option>
@@ -688,305 +558,222 @@ a.bdemo{font-size:.7rem;font-weight:600;color:#1a5276;text-decoration:none;paddi
         </div>
         <div><div class="flbl">דופק (אופציונלי)</div><input type="text" id="run-hr" class="finput" placeholder="145" onclick="this.select()"></div>
       </div>
-      <div style="margin-bottom:10px"><div class="flbl">תחושה</div>
+      <div style="margin-bottom:10px">
+        <div class="flbl">תחושה</div>
         <div class="feel-row">
-          <button class="fbtn" id="f1" onclick="setFeel(1)">&#x1F622; קשה</button>
-          <button class="fbtn" id="f2" onclick="setFeel(2)">&#x1F610; סביר</button>
-          <button class="fbtn" id="f3" onclick="setFeel(3)">&#x1F60A; טוב</button>
-          <button class="fbtn" id="f4" onclick="setFeel(4)">&#x1F4AA; מעולה</button>
+          <button class="fbtn" id="f1" onclick="setFeel(1)">😢 קשה</button>
+          <button class="fbtn" id="f2" onclick="setFeel(2)">😐 סביר</button>
+          <button class="fbtn" id="f3" onclick="setFeel(3)">😊 טוב</button>
+          <button class="fbtn" id="f4" onclick="setFeel(4)">💪 מעולה</button>
         </div>
       </div>
-      <div style="margin-bottom:12px"><div class="flbl">הערות</div>
+      <div style="margin-bottom:12px">
+        <div class="flbl">הערות</div>
         <textarea id="run-notes" class="finput" rows="2" placeholder="כאבים, קצב, תנאים..." style="resize:none"></textarea>
       </div>
       <div id="pacebox" class="pacebox"></div>
       <div id="msg-run" class="msg msg-ok">הריצה נשמרה!</div>
-      <button class="sbtnf" onclick="saveRun()">שמור ריצה &#x2713;</button>
+      <button class="sbtnf" onclick="saveRun()">שמור ריצה ✓</button>
     </div>
-    <div class="glbl" style="margin:0 0 10px">&#x1F4CA; היסטוריית ריצות</div>
+    <div class="glbl" style="margin:0 0 10px">📊 היסטוריית ריצות</div>
     <div id="hist-r"></div>
   </div>
+</div></div>
 
-</div>
+<!-- INSTALL BANNER -->
+<div id="install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0d1b2a;border-top:2px solid #1D9E75;padding:12px 16px;align-items:center;justify-content:space-between;z-index:9999;max-width:480px;margin:0 auto">
+  <div>
+    <div style="font-size:.8rem;font-weight:800;color:white">💪 התקן כאפליקציה</div>
+    <div style="font-size:.68rem;color:#8fa8c0;margin-top:2px">גישה מהירה מהמסך הראשי</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button onclick="document.getElementById('install-banner').style.display='none'" style="padding:8px 12px;border:1px solid #2a4a6e;border-radius:8px;background:transparent;color:#8fa8c0;font-family:'Heebo',sans-serif;font-size:.76rem;cursor:pointer">לא עכשיו</button>
+    <button onclick="installApp()" style="padding:8px 14px;border:none;border-radius:8px;background:#1D9E75;color:white;font-family:'Heebo',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer">⬇ התקן</button>
+  </div>
 </div>
 
 <script>
-/* ===== WEIGHT TRACKER ===== */
-function wtInit() {
-  var data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04', log: [] };
-  if (!data.height) data.height = 175;
-  if (!data.dob)    data.dob    = '1990-09-04';
-  if (!data.log || data.log.length === 0) {
-    data.log = [{ date: '2026-03-22', weight: 103.5, note: 'משקל התחלתי' }];
-    lsSJ('wt', data);
-  }
-  wtRender(data);
-}
+/* ===== STORAGE ===== */
+var MEM = {};
+var LS = (function(){ try{ localStorage.setItem('_t','1'); localStorage.removeItem('_t'); return true; } catch(e){ return false; } })();
+function lsR(k){ if(LS){ try{ return localStorage.getItem(k); } catch(e){} } return MEM[k]||null; }
+function lsW(k,v){ MEM[k]=v; if(LS){ try{ localStorage.setItem(k,v); } catch(e){} } }
+function lsD(k){ delete MEM[k]; if(LS){ try{ localStorage.removeItem(k); } catch(e){} } }
+function lsJ(k){ try{ return JSON.parse(lsR(k)); } catch(e){ return null; } }
+function lsSJ(k,v){ lsW(k, JSON.stringify(v)); }
 
-function calcAge(dob) {
-  var d = new Date(dob), today = new Date();
-  var age = today.getFullYear() - d.getFullYear();
-  var m = today.getMonth() - d.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
-  return age;
-}
-
-function bmiCategory(bmi, age) {
-  if (bmi < 18.5) return { label: 'תת משקל', color: '#aed6f1' };
-  if (bmi < 25)   return { label: 'משקל תקין', color: '#5dd9a8' };
-  if (bmi < 27.5 && age >= 65) return { label: 'משקל תקין (גיל 65+)', color: '#5dd9a8' };
-  if (bmi < 30)   return { label: 'עודף משקל', color: '#f0c890' };
-  if (bmi < 35)   return { label: 'השמנה דרגה 1', color: '#f0a060' };
-  if (bmi < 40)   return { label: 'השמנה דרגה 2', color: '#e08050' };
-  return           { label: 'השמנה דרגה 3', color: '#c0392b' };
-}
-
-function wtRender(data) {
-  if (!data) data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04', log: [] };
-  var cur    = parseFloat(data.cur);
-  var goal   = parseFloat(data.goal);
-  var height = parseFloat(data.height || 175);
-  var dob    = data.dob || '1990-09-04';
-  var startWeight = data.log && data.log.length > 0 ? parseFloat(data.log[0].weight) : cur;
-
-  // Progress bar
-  var totalToLose = startWeight - goal;
-  var lost = startWeight - cur;
-  var pct  = totalToLose > 0 ? Math.max(0, Math.min(100, Math.round(lost / totalToLose * 100))) : 0;
-
-  var curEl  = document.getElementById('wt-cur-lbl');
-  var goalEl = document.getElementById('wt-goal-lbl');
-  var barEl  = document.getElementById('wt-bar');
-  var pctEl  = document.getElementById('wt-pct-lbl');
-  if (curEl)  curEl.textContent  = cur + ' ק"ג';
-  if (goalEl) goalEl.textContent = goal + ' ק"ג';
-  if (barEl)  barEl.style.width  = pct + '%';
-  if (pctEl)  pctEl.textContent  = pct + '% מהיעד (' + (cur > goal ? (cur - goal).toFixed(1) + ' ק"ג נותרו' : 'הגעת ליעד! ') + ')';
-
-  // Age
-  var age = calcAge(dob);
-  var ageLbl = document.getElementById('age-lbl');
-  if (ageLbl) ageLbl.textContent = age;
-
-  // BMI
-  var hm  = height / 100;
-  var bmi = cur / (hm * hm);
-  var cat = bmiCategory(bmi, age);
-  var bmiEl = document.getElementById('wt-bmi-badge');
-  if (bmiEl) {
-    bmiEl.textContent = 'BMI ' + bmi.toFixed(1) + ' — ' + cat.label;
-    bmiEl.style.background = cat.color;
-    bmiEl.style.color = (cat.color === '#5dd9a8' || cat.color === '#aed6f1') ? '#0d4a30' : '#fff';
-  }
-}
-
-function openWtEdit() {
-  var data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04' };
-  document.getElementById('wt-inp-cur').value    = data.cur;
-  document.getElementById('wt-inp-goal').value   = data.goal;
-  document.getElementById('wt-inp-height').value = data.height || 175;
-  document.getElementById('wt-inp-dob').value    = data.dob    || '1990-09-04';
-  document.getElementById('wt-edit-modal').style.display = 'flex';
-}
-function closeWtEdit() {
-  document.getElementById('wt-edit-modal').style.display = 'none';
-}
-
-function saveWt() {
-  var newCur    = parseFloat(document.getElementById('wt-inp-cur').value);
-  var newGoal   = parseFloat(document.getElementById('wt-inp-goal').value);
-  var newHeight = parseFloat(document.getElementById('wt-inp-height').value);
-  var newDob    = document.getElementById('wt-inp-dob').value;
-  if (isNaN(newCur)||isNaN(newGoal)||newCur<=0||newGoal<=0) { alert('הזן ערכים תקינים'); return; }
-  if (isNaN(newHeight)||newHeight<100||newHeight>250) { alert('הזן גובה תקין (ס"מ)'); return; }
-  if (!newDob) { alert('הזן תאריך לידה'); return; }
-  var data = lsJ('wt') || { cur: 103.5, goal: 80, height: 175, dob: '1990-09-04', log: [] };
-  if (!data.log) data.log = [];
-  var today = new Date();
-  var ds = today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
-  var notes = [];
-  if (newGoal   !== parseFloat(data.goal))   notes.push('יעד: '+newGoal+' ק"ג');
-  if (newHeight !== parseFloat(data.height)) notes.push('גובה: '+newHeight+' ס"מ');
-  data.log.push({ date: ds, weight: newCur, note: notes.length ? notes.join(' | ') : 'עדכון' });
-  data.cur    = newCur;
-  data.goal   = newGoal;
-  data.height = newHeight;
-  data.dob    = newDob;
-  lsSJ('wt', data);
-  wtRender(data);
-  closeWtEdit();
-}
-
-function openWtHistory() {
-  var data = lsJ('wt') || { log: [] };
-  var list = document.getElementById('wt-hist-list');
-  if (!data.log || data.log.length === 0) {
-    list.innerHTML = '<div style="text-align:center;color:#8fa8c0;padding:1rem;font-size:.84rem">אין היסטוריה עדיין</div>';
-  } else {
-    var out = '';
-    var log = data.log.slice().reverse(); // newest first
-    for (var i = 0; i < log.length; i++) {
-      var e = log[i];
-      var dt = new Date(e.date);
-      var ds = DAYS[dt.getDay()] + ', ' + dt.getDate() + ' ' + MONTHS[dt.getMonth()] + ' ' + dt.getFullYear();
-      var isFirst = i === log.length - 1;
-      var diff = '';
-      if (!isFirst && i < log.length - 1) {
-        var prev = parseFloat(log[i+1].weight);
-        var delta = parseFloat(e.weight) - prev;
-        if (delta < 0) diff = '<span style="color:#1D9E75;font-weight:700"> (' + delta.toFixed(1) + ' ק"ג)</span>';
-        else if (delta > 0) diff = '<span style="color:#c0392b;font-weight:700"> (+' + delta.toFixed(1) + ' ק"ג)</span>';
-        else diff = '<span style="color:#6b7e94"> (ללא שינוי)</span>';
-      }
-      out += '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4f8">';
-      out += '<div><div style="font-size:.78rem;font-weight:700;color:#1a2332">' + e.weight + ' ק"ג' + diff + '</div>';
-      out += '<div style="font-size:.65rem;color:#6b7e94">' + ds + (e.note ? ' &middot; ' + e.note : '') + '</div></div>';
-      if (isFirst) out += '<span style="font-size:.62rem;background:#e8f0fa;color:#1a4f7a;padding:2px 8px;border-radius:10px;font-weight:700">התחלה</span>';
-      out += '</div>';
-    }
-    list.innerHTML = out;
-  }
-  document.getElementById('wt-hist-modal').style.display = 'flex';
-}
-function closeWtHistory() {
-  document.getElementById('wt-hist-modal').style.display = 'none';
-}
-
-/* ===== DAILY TIPS (AI-powered) ===== */
-function showDailyTip() {
-  var txtEl   = document.getElementById('tip-text');
-  var badgeEl = document.getElementById('tip-badge');
-  var dateEl  = document.getElementById('tip-date');
-  if (!txtEl) return;
-
-  // Date display
-  var today  = new Date();
-  var days   = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
-  var months = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
-  if (dateEl) dateEl.textContent = days[today.getDay()] + ', ' + today.getDate() + ' ' + months[today.getMonth()];
-
-  // Cache key: one tip per day
-  var cacheKey = 'tip_' + today.getFullYear() + '_' + today.getMonth() + '_' + today.getDate();
-  var cached   = lsJ(cacheKey);
-  if (cached) {
-    _renderTip(cached, badgeEl, txtEl);
-    return;
-  }
-
-  // Loading state
-  txtEl.textContent = 'טוען טיפ יומי...';
-  badgeEl.className = 'tip-badge fitness';
-  badgeEl.innerHTML = '&#x23F3; מרענן...';
-
-  // Pick category: alternate daily fitness/nutrition
-  var start2 = new Date(today.getFullYear(), 0, 0);
-  var dayOfYear = Math.floor((today - start2) / 86400000);
-  var category = dayOfYear % 2 === 0 ? 'כושר ואימון' : 'תזונה בריאה';
-  var catType  = dayOfYear % 2 === 0 ? 'fitness' : 'nutrition';
-
-  var userProfile = 'גבר, גיל 35, משקל 103.5 ק"ג, יעד 80 ק"ג. מתאמן 2 אימוני כוח + 2 ריצות אינטרוולים בשבוע. חזר לחדר כושר אחרי 3 שנים הפסקה.';
-
-  fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 120,
-      system: 'אתה מאמן כושר ותזונה. השב טיפ יומי אחד בעברית בנושא ' + category + '. הטיפ צריך להיות: מעשי וספציפי, מותאם לפרופיל המתאמן (' + userProfile + '), בעברית שוטפת וישירה, לא יותר מ-2 משפטים. השב רק את הטיפ עצמו, ללא כותרת וללא הסבר.',
-      messages: [{ role: 'user', content: 'השב טיפ ' + category + ' ליום היום.' }]
-    })
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(data){
-    var tip = data.content && data.content[0] ? data.content[0].text.trim() : null;
-    if (!tip) throw new Error('no content');
-    var obj = { text: tip, type: catType };
-    lsSJ(cacheKey, obj);
-    _renderTip(obj, badgeEl, txtEl);
-  })
-  .catch(function(){
-    // Fallback if API fails
-    var fallbacks = [
-      { text: 'שינה של 7-9 שעות היא חלק בלתי נפרד מהתאוששות השריר — אל תקצץ בה.', type: 'fitness' },
-      { text: 'שתה 2-3 ליטר מים ביום. בימי אימון — הוסף 500 מ"ל נוספים.', type: 'nutrition' },
-      { text: 'עקביות לאורך זמן > תוכנית מושלמת לשבועיים.', type: 'fitness' }
-    ];
-    var obj = fallbacks[new Date().getDate() % fallbacks.length];
-    _renderTip(obj, badgeEl, txtEl);
-  });
-}
-
-function _renderTip(obj, badgeEl, txtEl) {
-  txtEl.textContent = obj.text;
-  var isFit = obj.type === 'fitness';
-  badgeEl.className = 'tip-badge ' + (isFit ? 'fitness' : 'nutrition');
-  badgeEl.innerHTML = isFit ? '&#x1F4AA; טיפ כושר' : '&#x1F955; טיפ תזונה';
-}
+var DAYS   = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+var MONTHS = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
 
 /* ===== TABS ===== */
-function sw(i) {
-  for (var j=0;j<4;j++) { document.getElementById('s'+j).className='sec'; document.getElementById('t'+j).className='tab'; }
+function sw(i){
+  for(var j=0;j<4;j++){ document.getElementById('s'+j).className='sec'; document.getElementById('t'+j).className='tab'; }
   document.getElementById('s'+i).className='sec on';
   document.getElementById('t'+i).className='tab on';
-  if (i===0) showDailyTip();
-  if (i===2) initRunTab();
-  if (i===3) { initTr(); swTr(0); }
+  if(i===0) showDailyTip();
+  if(i===2) initRunTab();
+  if(i===3){ initTr(); swTr(0); }
 }
 
-/* ===== CARD ===== */
-function toggleCard(head) {
-  head.parentNode.classList.toggle('open');
+/* ===== WEIGHT TRACKER ===== */
+function calcAge(dob){
+  var d=new Date(dob), t=new Date();
+  var age=t.getFullYear()-d.getFullYear();
+  var m=t.getMonth()-d.getMonth();
+  if(m<0||(m===0&&t.getDate()<d.getDate())) age--;
+  return age;
 }
-
-/* ===== INFO ===== */
-function togI(id,btn) {
-  var b=document.getElementById(id);
-  b.classList.toggle('on');
-  btn.innerHTML=b.classList.contains('on')?'&#x2715; סגור':'&#x2139; מה זה?';
+function bmiCategory(bmi){
+  if(bmi<18.5) return {label:'תת משקל',color:'#aed6f1'};
+  if(bmi<25)   return {label:'משקל תקין',color:'#5dd9a8'};
+  if(bmi<30)   return {label:'עודף משקל',color:'#f0c890'};
+  if(bmi<35)   return {label:'השמנה דרגה 1',color:'#f0a060'};
+  if(bmi<40)   return {label:'השמנה דרגה 2',color:'#e08050'};
+  return               {label:'השמנה דרגה 3',color:'#c0392b'};
 }
-
-/* ===== GROUP ===== */
-function openGrp(gid,btn) {
-  var g=document.getElementById(gid);
-  var cards=g.querySelectorAll('.card');
-  var allOpen=true;
-  for (var i=0;i<cards.length;i++) if (cards[i].className.indexOf('open')<0) { allOpen=false; break; }
-  for (var i=0;i<cards.length;i++) {
-    if (allOpen) cards[i].className=cards[i].className.replace(' open','').replace('open','').trim();
-    else if (cards[i].className.indexOf('open')<0) cards[i].className+=' open';
+function wtInit(){
+  var data=lsJ('wt')||{cur:103.5,goal:80,height:175,dob:'1990-09-04',log:[]};
+  if(!data.log||!data.log.length) data.log=[{date:'2026-03-22',weight:103.5,note:'משקל התחלתי'}];
+  lsSJ('wt',data);
+  wtRender(data);
+}
+function wtRender(data){
+  if(!data) data=lsJ('wt')||{cur:103.5,goal:80,height:175,dob:'1990-09-04',log:[]};
+  var cur=parseFloat(data.cur), goal=parseFloat(data.goal);
+  var height=parseFloat(data.height||175), dob=data.dob||'1990-09-04';
+  var startW=data.log&&data.log.length?parseFloat(data.log[0].weight):cur;
+  var lost=startW-cur, total=startW-goal;
+  var pct=total>0?Math.max(0,Math.min(100,Math.round(lost/total*100))):0;
+  document.getElementById('wt-cur-lbl').textContent=cur+' ק"ג';
+  document.getElementById('wt-goal-lbl').textContent=goal+' ק"ג';
+  document.getElementById('wt-bar').style.width=pct+'%';
+  document.getElementById('wt-pct-lbl').textContent=pct+'% מהיעד ('+(cur>goal?(cur-goal).toFixed(1)+' ק"ג נותרו':'הגעת ליעד!')+')';
+  document.getElementById('age-lbl').textContent=calcAge(dob);
+  var hm=height/100, bmi=cur/(hm*hm), cat=bmiCategory(bmi);
+  var bmiEl=document.getElementById('wt-bmi-badge');
+  bmiEl.textContent='BMI '+bmi.toFixed(1)+' — '+cat.label;
+  bmiEl.style.background=cat.color;
+  bmiEl.style.color=(cat.color==='#5dd9a8'||cat.color==='#aed6f1')?'#0d4a30':'#fff';
+}
+function openWtEdit(){
+  var d=lsJ('wt')||{cur:103.5,goal:80,height:175,dob:'1990-09-04'};
+  document.getElementById('wt-inp-cur').value=d.cur;
+  document.getElementById('wt-inp-goal').value=d.goal;
+  document.getElementById('wt-inp-height').value=d.height||175;
+  document.getElementById('wt-inp-dob').value=d.dob||'1990-09-04';
+  document.getElementById('wt-edit-modal').style.display='flex';
+}
+function closeWtEdit(){ document.getElementById('wt-edit-modal').style.display='none'; }
+function saveWt(){
+  var nc=parseFloat(document.getElementById('wt-inp-cur').value);
+  var ng=parseFloat(document.getElementById('wt-inp-goal').value);
+  var nh=parseFloat(document.getElementById('wt-inp-height').value);
+  var nd=document.getElementById('wt-inp-dob').value;
+  if(isNaN(nc)||isNaN(ng)||nc<=0||ng<=0){ alert('הזן ערכים תקינים'); return; }
+  if(isNaN(nh)||nh<100||nh>250){ alert('הזן גובה תקין'); return; }
+  if(!nd){ alert('הזן תאריך לידה'); return; }
+  var data=lsJ('wt')||{cur:103.5,goal:80,height:175,dob:'1990-09-04',log:[]};
+  if(!data.log) data.log=[];
+  var t=new Date();
+  var ds=t.getFullYear()+'-'+String(t.getMonth()+1).padStart(2,'0')+'-'+String(t.getDate()).padStart(2,'0');
+  data.log.push({date:ds,weight:nc,note:'עדכון'});
+  data.cur=nc; data.goal=ng; data.height=nh; data.dob=nd;
+  lsSJ('wt',data); wtRender(data); closeWtEdit();
+}
+function openWtHistory(){
+  var data=lsJ('wt')||{log:[]};
+  var list=document.getElementById('wt-hist-list');
+  if(!data.log||!data.log.length){ list.innerHTML='<div style="text-align:center;color:#8fa8c0;padding:1rem">אין היסטוריה</div>'; }
+  else {
+    var log=data.log.slice().reverse(), out='';
+    for(var i=0;i<log.length;i++){
+      var e=log[i], dt=new Date(e.date);
+      var ds=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
+      var diff='';
+      if(i<log.length-1){ var delta=parseFloat(e.weight)-parseFloat(log[i+1].weight); diff=delta<0?'<span style="color:#1D9E75;font-weight:700"> ('+delta.toFixed(1)+' ק"ג)</span>':delta>0?'<span style="color:#c0392b;font-weight:700"> (+'+delta.toFixed(1)+' ק"ג)</span>':''; }
+      out+='<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f0f4f8">';
+      out+='<div><div style="font-size:.78rem;font-weight:700">'+e.weight+' ק"ג'+diff+'</div><div style="font-size:.65rem;color:#6b7e94">'+ds+(e.note?' · '+e.note:'')+'</div></div>';
+      if(i===log.length-1) out+='<span style="font-size:.62rem;background:#e8f0fa;color:#1a4f7a;padding:2px 8px;border-radius:10px;font-weight:700">התחלה</span>';
+      out+='</div>';
+    }
+    list.innerHTML=out;
   }
-  btn.textContent=allOpen?'\u05e4\u05ea\u05d7 \u05d4\u05db\u05dc':'\u05e1\u05d2\u05d5\u05e8 \u05d4\u05db\u05dc';
+  document.getElementById('wt-hist-modal').style.display='flex';
+}
+function closeWtHistory(){ document.getElementById('wt-hist-modal').style.display='none'; }
+
+/* ===== DAILY TIP ===== */
+function showDailyTip(){
+  var txtEl=document.getElementById('tip-text'), badgeEl=document.getElementById('tip-badge'), dateEl=document.getElementById('tip-date');
+  if(!txtEl) return;
+  var today=new Date();
+  if(dateEl) dateEl.textContent=DAYS[today.getDay()]+', '+today.getDate()+' '+MONTHS[today.getMonth()];
+  var key='tip_'+today.getFullYear()+'_'+today.getMonth()+'_'+today.getDate();
+  var cached=lsJ(key);
+  if(cached){ _renderTip(cached,badgeEl,txtEl); return; }
+  txtEl.textContent='טוען...'; badgeEl.className='tip-badge fitness'; badgeEl.innerHTML='⏳ מרענן...';
+  var dayOfYear=Math.floor((today-new Date(today.getFullYear(),0,0))/86400000);
+  var isFit=dayOfYear%2===0;
+  var cat=isFit?'כושר ואימון':'תזונה בריאה';
+  fetch('https://api.anthropic.com/v1/messages',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      model:'claude-sonnet-4-20250514', max_tokens:120,
+      system:'אתה מאמן כושר ותזונה. תן טיפ יומי אחד בעברית על '+cat+'. מותאם לגבר גיל 35, משקל 103.5ק"ג, יעד 80ק"ג, 2 אימוני כוח + 2 ריצות בשבוע. 2 משפטים מקסימום. רק הטיפ עצמו.',
+      messages:[{role:'user',content:'טיפ '+cat+' להיום.'}]
+    })
+  }).then(function(r){ return r.json(); })
+  .then(function(d){
+    var tip=d.content&&d.content[0]?d.content[0].text.trim():null;
+    if(!tip) throw new Error();
+    var obj={text:tip,type:isFit?'fitness':'nutrition'};
+    lsSJ(key,obj); _renderTip(obj,badgeEl,txtEl);
+  }).catch(function(){
+    var fb=[{text:'שינה של 7–9 שעות היא חלק בלתי נפרד מהתאוששות — אל תקצץ בה.',type:'fitness'},{text:'שתה 2–3 ליטר מים ביום. בימי אימון הוסף 500 מ"ל.',type:'nutrition'},{text:'עקביות לאורך זמן > תוכנית מושלמת לשבועיים.',type:'fitness'}];
+    _renderTip(fb[today.getDate()%fb.length],badgeEl,txtEl);
+  });
+}
+function _renderTip(obj,badgeEl,txtEl){
+  txtEl.textContent=obj.text;
+  var fit=obj.type==='fitness';
+  badgeEl.className='tip-badge '+(fit?'fitness':'nutrition');
+  badgeEl.innerHTML=fit?'💪 טיפ כושר':'🥕 טיפ תזונה';
 }
 
-/* ===== MANUAL DONE ===== */
-function manDone(cid,e) {
+/* ===== CARD TOGGLE ===== */
+function toggleCard(head){ head.parentNode.classList.toggle('open'); }
+function togI(id,btn){
+  var b=document.getElementById(id); b.classList.toggle('on');
+  btn.innerHTML=b.classList.contains('on')?'✕ סגור':'ℹ מה זה?';
+}
+function openGrp(gid,btn){
+  var g=document.getElementById(gid), cards=g.querySelectorAll('.card');
+  var allOpen=true;
+  for(var i=0;i<cards.length;i++) if(!cards[i].classList.contains('open')){ allOpen=false; break; }
+  for(var i=0;i<cards.length;i++){
+    if(allOpen) cards[i].classList.remove('open');
+    else        cards[i].classList.add('open');
+  }
+  btn.textContent=allOpen?'פתח הכל':'סגור הכל';
+}
+
+/* ===== DONE ===== */
+function manDone(cid,e){
   e.stopPropagation();
   var card=document.getElementById(cid);
-  var isDone=card.className.indexOf('done')>=0;
-  if (isDone) {
-    card.className=card.className.replace(' done','').replace('done','').trim();
-    var p=lsJ('wp')||{}; delete p[cid]; lsSJ('wp',p);
-    SC['br'+cid.replace('c','')]=0;
-    var brId='br'+cid.replace('c','');
-    var btn=document.getElementById(brId);
-    if (btn&&btn.getAttribute('data-total')) {
-      var t=parseInt(btn.getAttribute('data-total'));
-      btn.innerHTML='&#x23F1; \u05e1\u05d9\u05d9\u05dd \u05e1\u05d8 (1/'+t+')';
-    }
-  } else {
-    card.className+=' done';
-    var p=lsJ('wp')||{}; p[cid]=true; lsSJ('wp',p);
-  }
+  var isDone=card.classList.contains('done');
+  if(isDone){ card.classList.remove('done'); var p=lsJ('wp')||{}; delete p[cid]; lsSJ('wp',p); }
+  else      { card.classList.add('done');    var p=lsJ('wp')||{}; p[cid]=true;  lsSJ('wp',p); }
 }
 
 /* ===== REST TIMER ===== */
 var RT={}, SC={};
-
-function doRest(rid,cid,total,btn) {
+function doRest(rid,cid,total,btn){
   var brId=btn.id;
-  if (RT[brId]) { cancelRest(rid,brId,total); return; }
+  if(RT[brId]){ cancelRest(rid,brId,total); return; }
   btn.setAttribute('data-total',total);
-  if (!SC[brId]) SC[brId]=0;
+  if(!SC[brId]) SC[brId]=0;
   SC[brId]++;
   var cur=SC[brId];
   var box=document.getElementById(rid);
@@ -995,93 +782,187 @@ function doRest(rid,cid,total,btn) {
   var sub=document.getElementById('rs'+rid.replace('r',''));
   box.className='rbox on';
   var s=60; num.textContent=s;
-  if (lbl) lbl.textContent='\u05e1\u05d8 '+cur+'/'+total+' \u05d4\u05d5\u05e9\u05dc\u05dd';
-  if (sub) sub.textContent='60 \u05e9\u05e0\u05d9\u05d5\u05ea';
-  btn.innerHTML='&#x23F1; \u05de\u05e0\u05d5\u05d7\u05d4...';
+  if(lbl) lbl.textContent='סט '+cur+'/'+total+' הושלם';
+  if(sub) sub.textContent=' 60 שניות';
+  btn.innerHTML='⏱ מנוחה...';
   RT[brId]=setInterval(function(){
     s--; num.textContent=s;
-    if (sub) sub.textContent=s+'\u05e9\u05e0\u05d9\u05d5\u05ea';
-    if (s<=0) {
+    if(sub) sub.textContent=' '+s+' שניות';
+    if(s<=0){
       clearInterval(RT[brId]); delete RT[brId];
-      if (navigator.vibrate) navigator.vibrate([300,100,300]);
-      if (cur>=total) {
+      if(navigator.vibrate) navigator.vibrate([300,100,300]);
+      if(cur>=total){
         SC[brId]=0;
         var card=document.getElementById(cid);
-        if (card&&card.className.indexOf('done')<0) card.className+=' done';
-        var p=lsJ('wp')||{}; p[cid]=true; lsSJ('wp',p);
-        btn.innerHTML='&#x2705; \u05d4\u05d5\u05e9\u05dc\u05dd!';
-        if (lbl) lbl.textContent='\u05db\u05dc \u05d4\u05e1\u05d8\u05d9\u05dd \u05d4\u05d5\u05e9\u05dc\u05de\u05d5!';
-        if (sub) sub.textContent='';
-        if (navigator.vibrate) navigator.vibrate([500,200,500]);
-        setTimeout(function(){box.className='rbox';},3000);
+        if(card&&!card.classList.contains('done')){ card.classList.add('done'); var p=lsJ('wp')||{}; p[cid]=true; lsSJ('wp',p); }
+        btn.innerHTML='✅ הושלם!';
+        if(lbl) lbl.textContent='כל הסטים הושלמו!';
+        if(sub)  sub.textContent='';
+        if(navigator.vibrate) navigator.vibrate([500,200,500]);
+        setTimeout(function(){ box.className='rbox'; },3000);
       } else {
-        btn.innerHTML='&#x23F1; \u05e1\u05d9\u05d9\u05dd \u05e1\u05d8 ('+(cur+1)+'/'+total+')';
-        if (lbl) lbl.textContent='\u05de\u05d5\u05db\u05df \u05dc\u05e1\u05d8 '+(cur+1)+'/'+total;
-        if (sub) sub.textContent='\u05dc\u05d7\u05e5 \u05db\u05e9\u05de\u05d5\u05db\u05df';
-        setTimeout(function(){box.className='rbox';},4000);
+        btn.innerHTML='⏱ סיים סט ('+(cur+1)+'/'+total+')';
+        if(lbl) lbl.textContent='מוכן לסט '+(cur+1)+'/'+total;
+        if(sub) sub.textContent=' לחץ כשמוכן';
+        setTimeout(function(){ box.className='rbox'; },4000);
       }
     }
   },1000);
 }
-
-function cancelRest(rid,brId,total) {
-  if (RT[brId]) { clearInterval(RT[brId]); delete RT[brId]; }
+function cancelRest(rid,brId,total){
+  if(RT[brId]){ clearInterval(RT[brId]); delete RT[brId]; }
   SC[brId]=Math.max(0,(SC[brId]||1)-1);
-  var box=document.getElementById(rid);
-  var num=document.getElementById('rn'+rid.replace('r',''));
-  if (box) box.className='rbox';
-  if (num) num.textContent='60';
-  var btn=document.getElementById(brId);
-  var next=(SC[brId]||0)+1;
-  if (btn) btn.innerHTML='&#x23F1; \u05e1\u05d9\u05d9\u05dd \u05e1\u05d8 ('+next+'/'+total+')';
+  var box=document.getElementById(rid), num=document.getElementById('rn'+rid.replace('r',''));
+  if(box) box.className='rbox';
+  if(num) num.textContent='60';
+  var btn=document.getElementById(brId), next=(SC[brId]||0)+1;
+  if(btn) btn.innerHTML='⏱ סיים סט ('+next+'/'+total+')';
 }
 
 /* ===== PLANK ===== */
-var PI=null,PS=2,PC=1,PSec=60,PPh='work';
+var PI=null, PS=2, PC=1, PSec=60, PPh='work';
 function startPlank(){
-  PS=2;PC=1;PSec=60;PPh='work';
+  PS=2; PC=1; PSec=60; PPh='work';
   document.getElementById('plov').className='plov on';
   updPlank();
-  if(PI)clearInterval(PI);
+  if(PI) clearInterval(PI);
   PI=setInterval(function(){
     PSec--;
     if(PSec<0){
-      if(PPh==='work'){PPh='rest';PSec=60;if(navigator.vibrate)navigator.vibrate([200,100,200]);}
-      else if(PC<PS){PC++;PPh='work';PSec=60;if(navigator.vibrate)navigator.vibrate([300,100,300]);}
-      else{PPh='done';PSec=0;clearInterval(PI);PI=null;if(navigator.vibrate)navigator.vibrate([500,200,500,200,500]);}
+      if(PPh==='work'){ PPh='rest'; PSec=60; if(navigator.vibrate) navigator.vibrate([200,100,200]); }
+      else if(PC<PS){ PC++; PPh='work'; PSec=60; if(navigator.vibrate) navigator.vibrate([300,100,300]); }
+      else{ PPh='done'; PSec=0; clearInterval(PI); PI=null; if(navigator.vibrate) navigator.vibrate([500,200,500,200,500]); }
     }
     updPlank();
   },1000);
 }
 function updPlank(){
-  var ph=document.getElementById('plph'),cl=document.getElementById('plcl'),st=document.getElementById('plst'),dt=document.getElementById('pldots');
-  if(PPh==='work'){ph.className='plph work';ph.textContent='\u05e2\u05d1\u05d5\u05d3\u05d4 - \u05d4\u05d7\u05d6\u05e7 \u05e4\u05dc\u05d0\u05e0\u05e7!';}
-  else if(PPh==='rest'){ph.className='plph rest';ph.textContent='\u05de\u05e0\u05d5\u05d7\u05d4';}
-  else{ph.className='plph done';ph.textContent='\u05e1\u05d9\u05d9\u05de\u05ea! \u05db\u05dc \u05d4\u05db\u05d1\u05d5\u05d3!';}
-  cl.textContent=PSec; st.textContent='\u05e1\u05d8 '+PC+' \u05de\u05ea\u05d5\u05da '+PS;
-  var d=''; for(var i=1;i<=PS;i++){var c='pldot';if(i<PC)c+=' done';else if(i===PC)c+=' active';d+='<div class="'+c+'"></div>';}
+  var ph=document.getElementById('plph'), cl=document.getElementById('plcl');
+  var st=document.getElementById('plst'), dt=document.getElementById('pldots');
+  if(PPh==='work'){ ph.className='plph work'; ph.textContent='עבודה - החזק פלאנק!'; }
+  else if(PPh==='rest'){ ph.className='plph rest'; ph.textContent='מנוחה'; }
+  else{ ph.className='plph done'; ph.textContent='סיימת! כל הכבוד!'; }
+  cl.textContent=PSec; st.textContent='סט '+PC+' מתוך '+PS;
+  var d='';
+  for(var i=1;i<=PS;i++){ var c='pldot'; if(i<PC) c+=' done'; else if(i===PC) c+=' active'; d+='<div class="'+c+'"></div>'; }
   dt.innerHTML=d;
 }
-function stopPlank(){if(PI){clearInterval(PI);PI=null;}document.getElementById('plov').className='plov';}
+function stopPlank(){ if(PI){ clearInterval(PI); PI=null; } document.getElementById('plov').className='plov'; }
 
-/* ===== STORAGE ===== */
-var MEM={};
-var LS=(function(){try{localStorage.setItem('_t','1');localStorage.removeItem('_t');return true;}catch(e){return false;}})();
-function lsR(k){if(LS){try{return localStorage.getItem(k);}catch(e){}}return MEM[k]||null;}
-function lsW(k,v){MEM[k]=v;if(LS){try{localStorage.setItem(k,v);}catch(e){}}}
-function lsD(k){delete MEM[k];if(LS){try{localStorage.removeItem(k);}catch(e){}}}
-function lsJ(k){try{return JSON.parse(lsR(k));}catch(e){return null;}}
-function lsSJ(k,v){lsW(k,JSON.stringify(v));}
+/* ===== RUN INTERVAL TIMER ===== */
+var RT_PHASES=[
+  {run:120,walk:120,reps:5,label:'שבועות 1–2'},
+  {run:120,walk:90, reps:6,label:'שבועות 3–4'},
+  {run:150,walk:90, reps:6,label:'שבועות 5–6'},
+  {run:180,walk:60, reps:5,label:'שבועות 7–8'}
+];
+var RTS={timer:null,phase:0,rep:1,mode:'idle',sec:0};
 
-/* ===== LOAD DONE STATE ===== */
-window.addEventListener('load',function(){
-  var prog=lsJ('wp')||{};
-  for(var id in prog) if(prog[id]){var el=document.getElementById(id);if(el)el.classList.add('done');}
-  renderAtt();
-  wtInit();
-  showDailyTip();
-  // age now calculated in wtRender
-});
+function fmtSec(s){ var m=Math.floor(s/60),r=s%60; return m+':'+(r<10?'0':'')+r; }
+
+function rtSelectPhase(){
+  RTS.phase=parseInt(document.getElementById('rt-phase-sel').value);
+  rtReset();
+  for(var i=0;i<4;i++){ var row=document.getElementById('rphase-'+i); if(row) row.className=(i===RTS.phase)?'now':''; }
+}
+function rtReset(){
+  if(RTS.timer){ clearInterval(RTS.timer); RTS.timer=null; }
+  RTS.rep=1; RTS.mode='idle'; RTS.sec=0;
+  var p=RT_PHASES[RTS.phase];
+  document.getElementById('rt-clock').textContent='00:00';
+  document.getElementById('rt-mode-lbl').textContent='לחץ התחל';
+  document.getElementById('rt-mode-lbl').style.color='white';
+  document.getElementById('rt-rep-lbl').textContent=p.reps+' אינטרוולים | '+p.label;
+  document.getElementById('rt-phase-info').textContent=p.label+' — ריצה '+fmtSec(p.run)+' / הליכה '+fmtSec(p.walk)+' × '+p.reps;
+  var btn=document.getElementById('rt-start-btn');
+  btn.textContent='▶ התחל'; btn.style.background='#1D9E75';
+}
+function rtStart(){
+  if(RTS.timer){ clearInterval(RTS.timer); RTS.timer=null; var btn=document.getElementById('rt-start-btn'); btn.textContent='▶ המשך'; btn.style.background='#1D9E75'; return; }
+  var p=RT_PHASES[RTS.phase];
+  if(RTS.mode==='idle'){ RTS.mode='run'; RTS.sec=p.run; }
+  var btn=document.getElementById('rt-start-btn');
+  btn.textContent='⏸ השהה'; btn.style.background='#c0392b';
+  RTS.timer=setInterval(function(){
+    RTS.sec--;
+    document.getElementById('rt-clock').textContent=fmtSec(RTS.sec);
+    var ml=document.getElementById('rt-mode-lbl'), rl=document.getElementById('rt-rep-lbl');
+    if(RTS.mode==='run'){ ml.textContent='🏃 ריצה'; ml.style.color='#5dd9a8'; }
+    else               { ml.textContent='🚶 הליכה'; ml.style.color='#f0c890'; }
+    rl.textContent='אינטרוול '+RTS.rep+' / '+p.reps;
+    if(RTS.sec<=0){
+      if(navigator.vibrate) navigator.vibrate([200,100,200]);
+      if(RTS.mode==='run'){ RTS.mode='walk'; RTS.sec=p.walk; }
+      else{
+        if(RTS.rep>=p.reps){
+          clearInterval(RTS.timer); RTS.timer=null;
+          ml.textContent='✅ סיימת!'; ml.style.color='#5dd9a8';
+          rl.textContent='כל הכבוד!';
+          document.getElementById('rt-clock').textContent='00:00';
+          btn.textContent='▶ התחל מחדש'; btn.style.background='#1D9E75';
+          RTS.mode='idle'; RTS.rep=1;
+          if(navigator.vibrate) navigator.vibrate([500,200,500,200,500]);
+          return;
+        }
+        RTS.rep++; RTS.mode='run'; RTS.sec=p.run;
+      }
+    }
+  },1000);
+}
+function initRunTab(){ rtReset(); renderRunExtras(); }
+
+function renderRunExtras(){
+  var runs=lsJ('runs')||[];
+  var statsEl=document.getElementById('run-stats-row');
+  if(statsEl){
+    var totalDist=0, totalTime=0, count=runs.length;
+    for(var i=0;i<runs.length;i++){ totalDist+=parseFloat(runs[i].dist)||0; totalTime+=parseFloat(runs[i].time)||0; }
+    var avgPace=(totalDist>0&&count>0)?calcPace(totalDist/count,totalTime/count):'—';
+    statsEl.innerHTML='<div class="stat"><div class="sv">'+count+'</div><div class="sl">ריצות</div></div>'+
+      '<div class="stat"><div class="sv">'+totalDist.toFixed(1)+'</div><div class="sl">ק"מ סה"כ</div></div>'+
+      '<div class="stat"><div class="sv">'+(avgPace||'—')+'</div><div class="sl">קצב ממוצע</div></div>';
+  }
+  var achEl=document.getElementById('run-achievements');
+  if(achEl){
+    var badges=[], dist5=0;
+    for(var j=0;j<runs.length;j++) dist5+=parseFloat(runs[j].dist)||0;
+    if(runs.length>=1)  badges.push('🏅 ריצה ראשונה');
+    if(runs.length>=5)  badges.push('🔥 5 ריצות');
+    if(runs.length>=10) badges.push('⭐ 10 ריצות');
+    if(dist5>=10) badges.push('🗺 10 ק"מ');
+    if(dist5>=25) badges.push('🏆 25 ק"מ');
+    achEl.innerHTML=badges.length?badges.map(function(b){ return '<span style="background:#fff8e8;border:1px solid #f0d898;color:#7a5000;font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:20px">'+b+'</span>'; }).join(''):'<span style="color:#8fa8c0;font-size:.8rem">השלם ריצות כדי לקבל הישגים</span>';
+  }
+  drawRunChart(runs);
+}
+function drawRunChart(runs){
+  var canvas=document.getElementById('run-chart'), emptyEl=document.getElementById('run-chart-empty');
+  if(!canvas) return;
+  var filtered=runs.filter(function(r){ return r.dist&&r.time; }).slice(0,10).reverse();
+  if(filtered.length<2){ canvas.style.display='none'; if(emptyEl) emptyEl.style.display='block'; return; }
+  canvas.style.display='block'; if(emptyEl) emptyEl.style.display='none';
+  var ctx=canvas.getContext('2d');
+  canvas.width=(canvas.offsetWidth||300)*window.devicePixelRatio;
+  canvas.height=140*window.devicePixelRatio;
+  ctx.scale(window.devicePixelRatio||1,window.devicePixelRatio||1);
+  var W=canvas.offsetWidth||300, H=140, pad=30, gW=W-pad*2, gH=H-pad*2;
+  var paces=filtered.map(function(r){ return parseFloat(r.time)/parseFloat(r.dist); });
+  var mn=Math.min.apply(null,paces)*.95, mx=Math.max.apply(null,paces)*1.05;
+  ctx.strokeStyle='#e2eaf2'; ctx.lineWidth=1;
+  for(var gi=0;gi<=4;gi++){ var gy=pad+(gH/4)*gi; ctx.beginPath(); ctx.moveTo(pad,gy); ctx.lineTo(W-pad,gy); ctx.stroke(); }
+  ctx.beginPath(); ctx.strokeStyle='#1D9E75'; ctx.lineWidth=2;
+  for(var pi=0;pi<paces.length;pi++){
+    var px=pad+(pi/(paces.length-1))*gW, py=pad+gH-((paces[pi]-mn)/(mx-mn))*gH;
+    if(pi===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+  for(var di=0;di<paces.length;di++){
+    var dpx=pad+(di/(paces.length-1))*gW, dpy=pad+gH-((paces[di]-mn)/(mx-mn))*gH;
+    ctx.beginPath(); ctx.arc(dpx,dpy,4,0,Math.PI*2); ctx.fillStyle='#1D9E75'; ctx.fill();
+    ctx.fillStyle='#6b7e94'; ctx.font='10px Heebo,sans-serif'; ctx.textAlign='center';
+    ctx.fillText(fmtSec(Math.round(paces[di]*60)),dpx,dpy-8);
+  }
+}
 
 /* ===== TRACKING SUBTABS ===== */
 function swTr(i){
@@ -1097,25 +978,25 @@ function swTr(i){
 
 /* ===== EXERCISES ===== */
 var EX=[
-  {id:'e1',he:'\u05dc\u05d7\u05d9\u05e6\u05ea \u05e8\u05d2\u05dc\u05d9\u05d9\u05dd',en:'Leg Press',sets:'3',reps:'10-12',kg:'41'},
-  {id:'e2',he:'\u05db\u05e4\u05d9\u05e4\u05ea \u05d1\u05e8\u05da \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Leg Curl',sets:'3',reps:'10-12',kg:'36'},
-  {id:'e3',he:'\u05e2\u05dc\u05d9\u05d5\u05ea \u05ea\u05d0\u05d5\u05de\u05d9\u05d9\u05dd',en:'Calf Raise',sets:'2',reps:'15-20',kg:''},
-  {id:'e4',he:'\u05de\u05e9\u05d9\u05db\u05d4 \u05d1\u05e4\u05d5\u05dc\u05d9 \u05e2\u05dc\u05d9\u05d5\u05df',en:'Lat Pulldown',sets:'3',reps:'10-12',kg:'34'},
-  {id:'e5',he:'\u05d7\u05ea\u05d9\u05e8\u05d4 \u05d1\u05d9\u05e9\u05d9\u05d1\u05d4 \u05d1\u05db\u05d1\u05dc',en:'Seated Cable Row',sets:'3',reps:'10-12',kg:''},
-  {id:'e6',he:'\u05dc\u05d7\u05d9\u05e6\u05ea \u05d7\u05d6\u05d4 \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Machine Chest Press',sets:'3',reps:'10-12',kg:'36'},
-  {id:'e7',he:'\u05e4\u05e8\u05e4\u05e8 \u05d7\u05d6\u05d4 \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Pec Deck Fly',sets:'2',reps:'12-15',kg:''},
-  {id:'e8',he:'\u05dc\u05d7\u05d9\u05e6\u05ea \u05db\u05ea\u05e4\u05d9\u05d9\u05dd \u05d1\u05de\u05db\u05d5\u05e0\u05d4',en:'Machine Shoulder Press',sets:'3',reps:'10-12',kg:''},
-  {id:'e9',he:'\u05d4\u05e8\u05de\u05d5\u05ea \u05e6\u05d3 \u05e2\u05dd \u05d3\u05de\u05d1\u05dc\u05d9\u05dd',en:'Lateral Raise',sets:'2',reps:'12-15',kg:'5'},
-  {id:'e10',he:'\u05db\u05e4\u05d9\u05e4\u05ea \u05de\u05e8\u05e4\u05e7\u05d9\u05dd \u05d1\u05e9\u05d9\u05e4\u05d5\u05e2',en:'Incline Dumbbell Curl',sets:'3',reps:'10-12',kg:'7'},
-  {id:'e11',he:'\u05d3\u05d7\u05d9\u05e4\u05ea \u05d8\u05e8\u05d9\u05e6\u05e4 \u05d1\u05d7\u05d1\u05dc',en:'Tricep Rope Pushdown',sets:'3',reps:'10-12',kg:''},
-  {id:'e12',he:'\u05e4\u05dc\u05d0\u05e0\u05e7',en:'Plank',sets:'2',reps:'60',kg:''},
-  {id:'e13',he:'\u05e4\u05d9\u05e0\u05d2\u05d5\u05d5\u05d9\u05df',en:'Penguin Crunch',sets:'3',reps:'20-30',kg:''},
-  {id:'e14',he:'\u05d4\u05e8\u05de\u05ea \u05e8\u05d2\u05dc\u05d9\u05d9\u05dd \u05ea\u05dc\u05d5\u05d9\u05d4',en:'Hanging Leg Raise',sets:'3',reps:'12-15',kg:''}
+  {id:'e1',he:'לחיצת רגליים',en:'Leg Press',sets:'3',reps:'10-12',kg:'41'},
+  {id:'e2',he:'כפיפת ברך במכונה',en:'Leg Curl',sets:'3',reps:'10-12',kg:'36'},
+  {id:'e3',he:'עליות תאומים',en:'Calf Raise',sets:'2',reps:'15-20',kg:''},
+  {id:'e4',he:'משיכה בפולי עליון',en:'Lat Pulldown',sets:'3',reps:'10-12',kg:'34'},
+  {id:'e5',he:'חתירה בישיבה בכבל',en:'Seated Cable Row',sets:'3',reps:'10-12',kg:''},
+  {id:'e6',he:'לחיצת חזה במכונה',en:'Machine Chest Press',sets:'3',reps:'10-12',kg:'36'},
+  {id:'e7',he:'פרפר חזה במכונה',en:'Pec Deck Fly',sets:'2',reps:'12-15',kg:''},
+  {id:'e8',he:'לחיצת כתפיים במכונה',en:'Machine Shoulder Press',sets:'3',reps:'10-12',kg:''},
+  {id:'e9',he:'הרמות צד עם דמבלים',en:'Lateral Raise',sets:'2',reps:'12-15',kg:'5'},
+  {id:'e10',he:'כפיפת מרפקים בשיפוע',en:'Incline Dumbbell Curl',sets:'3',reps:'10-12',kg:'7'},
+  {id:'e11',he:'דחיפת טריצפ בחבל',en:'Tricep Rope Pushdown',sets:'3',reps:'10-12',kg:''},
+  {id:'e12',he:'פלאנק',en:'Plank',sets:'2',reps:'60',kg:''},
+  {id:'e13',he:'פינגווין',en:'Penguin Crunch',sets:'3',reps:'20-30',kg:''},
+  {id:'e14',he:'הרמת רגליים תלויה',en:'Hanging Leg Raise',sets:'3',reps:'12-15',kg:''}
 ];
 
 var trReady=false;
 function initTr(){
-  if(trReady){renderStrH();return;}
+  if(trReady){ renderStrH(); return; }
   trReady=true;
   var today=new Date();
   var ds=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
@@ -1126,13 +1007,13 @@ function initTr(){
   document.getElementById('dbadge').style.display=draft?'inline':'none';
   var html='';
   for(var i=0;i<EX.length;i++){
-    var ex=EX[i],dv=null;
-    if(draft) for(var k=0;k<draft.entries.length;k++) if(draft.entries[k].id===ex.id){dv=draft.entries[k];break;}
-    var kgV=dv?dv.kg:ex.kg,stV=dv?dv.sets:ex.sets,rpV=dv?dv.reps:ex.reps,unit=dv?(dv.unit||'kg'):'kg';
+    var ex=EX[i], dv=null;
+    if(draft) for(var k=0;k<draft.entries.length;k++) if(draft.entries[k].id===ex.id){ dv=draft.entries[k]; break; }
+    var kgV=dv?dv.kg:ex.kg, stV=dv?dv.sets:ex.sets, rpV=dv?dv.reps:ex.reps, unit=dv?(dv.unit||'kg'):'kg';
     html+='<div class="log-row"><div class="lname">'+ex.he+'<small>'+ex.en+'</small></div><div class="linputs">';
-    html+='<input class="inp" type="text" id="kg-'+ex.id+'" value="'+kgV+'" placeholder="\u05de\u05e9\u05e7\u05dc" onclick="this.select()">';
-    html+='<input class="inp" type="text" id="st-'+ex.id+'" value="'+stV+'" placeholder="\u05e1\u05d8\u05d9\u05dd" onclick="this.select()">';
-    html+='<input class="inp" type="text" id="rp-'+ex.id+'" value="'+rpV+'" placeholder="\u05d7\u05d6" onclick="this.select()">';
+    html+='<input class="inp" type="text" id="kg-'+ex.id+'" value="'+kgV+'" placeholder="משקל" onclick="this.select()">';
+    html+='<input class="inp" type="text" id="st-'+ex.id+'" value="'+stV+'" placeholder="סטים" onclick="this.select()">';
+    html+='<input class="inp" type="text" id="rp-'+ex.id+'" value="'+rpV+'" placeholder="חז" onclick="this.select()">';
     html+='<div class="utog"><span class="ut'+(unit==='kg'?' on':'')+'" onclick="setUnit(\''+ex.id+'\',\'kg\')">KG</span><span class="ut'+(unit==='lb'?' on':'')+'" onclick="setUnit(\''+ex.id+'\',\'lb\')">LB</span></div>';
     html+='</div></div>';
   }
@@ -1141,79 +1022,76 @@ function initTr(){
   document.getElementById('run-dist').addEventListener('input',updPace);
   document.getElementById('run-time').addEventListener('input',updPace);
 }
-
 function setUnit(id,unit){
   var rows=document.querySelectorAll('.log-row');
-  for(var i=0;i<EX.length;i++) if(EX[i].id===id){var opts=rows[i].querySelectorAll('.ut');for(var j=0;j<opts.length;j++) opts[j].className='ut'+(opts[j].textContent.toLowerCase()===unit?' on':'');break;}
+  for(var i=0;i<EX.length;i++) if(EX[i].id===id){ var opts=rows[i].querySelectorAll('.ut'); for(var j=0;j<opts.length;j++) opts[j].className='ut'+(opts[j].textContent.toLowerCase()===unit?' on':''); break; }
 }
 function collectE(){
-  var rows=document.querySelectorAll('.log-row'),entries=[];
+  var rows=document.querySelectorAll('.log-row'), entries=[];
   for(var i=0;i<EX.length;i++){
-    var ex=EX[i],utEl=rows[i]?rows[i].querySelector('.ut.on'):null,unit=utEl?utEl.textContent.toLowerCase():'kg';
+    var ex=EX[i], utEl=rows[i]?rows[i].querySelector('.ut.on'):null, unit=utEl?utEl.textContent.toLowerCase():'kg';
     entries.push({id:ex.id,he:ex.he,kg:document.getElementById('kg-'+ex.id).value,sets:document.getElementById('st-'+ex.id).value,reps:document.getElementById('rp-'+ex.id).value,unit:unit});
   }
   return entries;
 }
-function showMsg(id){var el=document.getElementById(id);el.style.display='block';setTimeout(function(){el.style.display='none';},2500);}
-function saveDraft(){lsSJ('wh_draft',{date:document.getElementById('log-date').value,entries:collectE()});document.getElementById('dbadge').style.display='inline';showMsg('msg-dr');}
+function showMsg(id){ var el=document.getElementById(id); el.style.display='block'; setTimeout(function(){ el.style.display='none'; },2500); }
+function saveDraft(){ lsSJ('wh_draft',{date:document.getElementById('log-date').value,entries:collectE()}); document.getElementById('dbadge').style.display='inline'; showMsg('msg-dr'); }
 function finishWO(){
-  var date=document.getElementById('log-date').value;if(!date){alert('\u05d1\u05d7\u05e8 \u05ea\u05d0\u05e8\u05d9\u05da');return;}
-  var all=collectE(),entries=[];
-  for(var i=0;i<all.length;i++) if(all[i].kg) entries.push({he:all[i].he,kg:all[i].kg,sets:all[i].sets,reps:all[i].reps,unit:all[i].unit});
-  if(!entries.length){alert('\u05d4\u05d6\u05df \u05dc\u05e4\u05d7\u05d5\u05ea \u05de\u05e9\u05e7\u05dc \u05d0\u05d7\u05d3');return;}
-  var h=lsJ('wh')||[];h.unshift({date:date,entries:entries});if(h.length>100)h=h.slice(0,100);
-  lsSJ('wh',h);lsD('wh_draft');document.getElementById('dbadge').style.display='none';
-  renderStrH();showMsg('msg-ok');
+  var date=document.getElementById('log-date').value; if(!date){ alert('בחר תאריך'); return; }
+  var all=collectE(), entries=[];
+  for(var i=0;i<all.length;i++) if(all[i].kg) entries.push(all[i]);
+  if(!entries.length){ alert('הזן לפחות משקל אחד'); return; }
+  var h=lsJ('wh')||[]; h.unshift({date:date,entries:entries}); if(h.length>100) h=h.slice(0,100);
+  lsSJ('wh',h); lsD('wh_draft'); document.getElementById('dbadge').style.display='none';
+  renderStrH(); showMsg('msg-ok');
 }
-function delWO(idx){if(!confirm('\u05dc\u05de\u05d7\u05d5\u05e7?'))return;var h=lsJ('wh')||[];h.splice(idx,1);lsSJ('wh',h);renderStrH();}
+function delWO(idx){ if(!confirm('למחוק?')) return; var h=lsJ('wh')||[]; h.splice(idx,1); lsSJ('wh',h); renderStrH(); }
 function editWO(idx){
-  var h=lsJ('wh')||[],w=h[idx],entries=[];
-  for(var i=0;i<EX.length;i++){var found=null;for(var k=0;k<w.entries.length;k++) if(w.entries[k].he===EX[i].he){found=w.entries[k];break;}entries.push({id:EX[i].id,he:EX[i].he,kg:found?found.kg:EX[i].kg,sets:found?found.sets:EX[i].sets,reps:found?found.reps:EX[i].reps,unit:found?(found.unit||'kg'):'kg'});}
-  h.splice(idx,1);lsSJ('wh',h);lsSJ('wh_draft',{date:w.date,entries:entries});trReady=false;sw(3);
+  var h=lsJ('wh')||[], w=h[idx], entries=[];
+  for(var i=0;i<EX.length;i++){ var found=null; for(var k=0;k<w.entries.length;k++) if(w.entries[k].he===EX[i].he){ found=w.entries[k]; break; } entries.push({id:EX[i].id,he:EX[i].he,kg:found?found.kg:EX[i].kg,sets:found?found.sets:EX[i].sets,reps:found?found.reps:EX[i].reps,unit:found?(found.unit||'kg'):'kg'}); }
+  h.splice(idx,1); lsSJ('wh',h); lsSJ('wh_draft',{date:w.date,entries:entries}); trReady=false; sw(3);
 }
-var DAYS=['\u05e8\u05d0\u05e9\u05d5\u05df','\u05e9\u05e0\u05d9','\u05e9\u05dc\u05d9\u05e9\u05d9','\u05e8\u05d1\u05d9\u05e2\u05d9','\u05d7\u05de\u05d9\u05e9\u05d9','\u05e9\u05d9\u05e9\u05d9','\u05e9\u05d1\u05ea'];
-var MONTHS=['\u05d9\u05e0\u05d5\u05d0\u05e8','\u05e4\u05d1\u05e8\u05d5\u05d0\u05e8','\u05de\u05e8\u05e5','\u05d0\u05e4\u05e8\u05d9\u05dc','\u05de\u05d0\u05d9','\u05d9\u05d5\u05e0\u05d9','\u05d9\u05d5\u05dc\u05d9','\u05d0\u05d5\u05d2\u05d5\u05e1\u05d8','\u05e1\u05e4\u05d8\u05de\u05d1\u05e8','\u05d0\u05d5\u05e7\u05d8\u05d5\u05d1\u05e8','\u05e0\u05d5\u05d1\u05de\u05d1\u05e8','\u05d3\u05e6\u05de\u05d1\u05e8'];
 function renderStrH(){
-  var h=lsJ('wh')||[],el=document.getElementById('hist-s');if(!el)return;
-  if(!h.length){el.innerHTML='<div class="empty">\u05e2\u05d3\u05d9\u05d9\u05df \u05d0\u05d9\u05df \u05d0\u05d9\u05de\u05d5\u05e0\u05d9\u05dd</div>';return;}
+  var h=lsJ('wh')||[], el=document.getElementById('hist-s'); if(!el) return;
+  if(!h.length){ el.innerHTML='<div class="empty">עדיין אין אימונים</div>'; return; }
   var out='';
   for(var i=0;i<h.length;i++){
-    var w=h[i],dt=new Date(w.date),ds=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
-    out+='<div class="hwcard"><div class="hwhd"><span class="hwdt">'+ds+'</span><div class="hwac"><button class="hwbtn" onclick="editWO('+i+')">&#x270F;</button><button class="hwbtn" onclick="delWO('+i+')">&#x1F5D1;</button></div></div><div class="hwbd">';
-    for(var j=0;j<w.entries.length;j++){var e=w.entries[j],ul=e.unit==='lb'?'LB':'KG';out+='<div class="hwrow"><span class="hwnm">'+e.he+'</span><span class="hwvl">'+e.sets+' x '+e.reps+' | <b>'+e.kg+' '+ul+'</b></span></div>';}
+    var w=h[i], dt=new Date(w.date), ds=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
+    out+='<div class="hwcard"><div class="hwhd"><span class="hwdt">'+ds+'</span><div class="hwac"><button class="hwbtn" onclick="editWO('+i+')">✏</button><button class="hwbtn" onclick="delWO('+i+')">🗑</button></div></div><div class="hwbd">';
+    for(var j=0;j<w.entries.length;j++){ var e=w.entries[j], ul=e.unit==='lb'?'LB':'KG'; out+='<div class="hwrow"><span class="hwnm">'+e.he+'</span><span class="hwvl">'+e.sets+' x '+e.reps+' | <b>'+e.kg+' '+ul+'</b></span></div>'; }
     out+='</div></div>';
   }
   el.innerHTML=out;
 }
 
-/* ===== RUN ===== */
+/* ===== RUN LOG ===== */
 var RF=0;
-function setFeel(n){RF=n;for(var i=1;i<=4;i++) document.getElementById('f'+i).className='fbtn'+(i===n?' on':'');}
-function calcPace(d,m){if(!d||!m||isNaN(d)||isNaN(m)||d<=0)return'';var p=m/d,pm=Math.floor(p),ps=Math.round((p-pm)*60);if(ps===60){pm++;ps=0;}return pm+':'+(ps<10?'0':'')+ps+' \u05d3\u05e7\'/\u05e7"\u05de';}
-function updPace(){var d=parseFloat(document.getElementById('run-dist').value),t=parseFloat(document.getElementById('run-time').value),pb=document.getElementById('pacebox'),pace=calcPace(d,t);if(pace){pb.style.display='block';pb.innerHTML='&#x23F1; \u05d8\u05de\u05e4\u05d5: <b>'+pace+'</b>';}else pb.style.display='none';}
+function setFeel(n){ RF=n; for(var i=1;i<=4;i++) document.getElementById('f'+i).className='fbtn'+(i===n?' on':''); }
+function calcPace(d,m){ if(!d||!m||isNaN(d)||isNaN(m)||d<=0) return ''; var p=m/d, pm=Math.floor(p), ps=Math.round((p-pm)*60); if(ps===60){ pm++; ps=0; } return pm+':'+(ps<10?'0':'')+ps+" דק'/ק\"מ"; }
+function updPace(){ var d=parseFloat(document.getElementById('run-dist').value), t=parseFloat(document.getElementById('run-time').value), pb=document.getElementById('pacebox'), pace=calcPace(d,t); if(pace){ pb.style.display='block'; pb.innerHTML='⏱ קצב: <b>'+pace+'</b>'; } else pb.style.display='none'; }
 function saveRun(){
-  var date=document.getElementById('run-date').value;if(!date){alert('\u05d1\u05d7\u05e8 \u05ea\u05d0\u05e8\u05d9\u05da');return;}
-  var dist=document.getElementById('run-dist').value,time=document.getElementById('run-time').value;
-  if(!dist&&!time){alert('\u05d4\u05d6\u05df \u05de\u05e8\u05d7\u05e7 \u05d0\u05d5 \u05d6\u05de\u05df');return;}
+  var date=document.getElementById('run-date').value; if(!date){ alert('בחר תאריך'); return; }
+  var dist=document.getElementById('run-dist').value, time=document.getElementById('run-time').value;
+  if(!dist&&!time){ alert('הזן מרחק או זמן'); return; }
   var run={date:date,dist:dist,time:time,interval:document.getElementById('run-ivl').value,hr:document.getElementById('run-hr').value,feel:RF,notes:document.getElementById('run-notes').value,pace:calcPace(parseFloat(dist),parseFloat(time))};
-  var runs=lsJ('runs')||[];runs.unshift(run);if(runs.length>100)runs=runs.slice(0,100);
-  lsSJ('runs',runs);renderRunH();showMsg('msg-run');
-  document.getElementById('run-dist').value='';document.getElementById('run-time').value='';document.getElementById('run-hr').value='';document.getElementById('run-notes').value='';document.getElementById('pacebox').style.display='none';
-  RF=0;for(var i=1;i<=4;i++) document.getElementById('f'+i).className='fbtn';
+  var runs=lsJ('runs')||[]; runs.unshift(run); if(runs.length>100) runs=runs.slice(0,100);
+  lsSJ('runs',runs); renderRunH(); showMsg('msg-run');
+  document.getElementById('run-dist').value=''; document.getElementById('run-time').value=''; document.getElementById('run-hr').value=''; document.getElementById('run-notes').value=''; document.getElementById('pacebox').style.display='none';
+  RF=0; for(var i=1;i<=4;i++) document.getElementById('f'+i).className='fbtn';
   renderRunExtras();
 }
-function delRun(idx){if(!confirm('\u05dc\u05de\u05d7\u05d5\u05e7?'))return;var runs=lsJ('runs')||[];runs.splice(idx,1);lsSJ('runs',runs);renderRunH();}
-var FEEL=['','&#x1F622; \u05e7\u05e9\u05d4','&#x1F610; \u05e1\u05d1\u05d9\u05e8','&#x1F60A; \u05d8\u05d5\u05d1','&#x1F4AA; \u05de\u05e2\u05d5\u05dc\u05d4'];
+function delRun(idx){ if(!confirm('למחוק?')) return; var runs=lsJ('runs')||[]; runs.splice(idx,1); lsSJ('runs',runs); renderRunH(); }
+var FEEL=['','😢 קשה','😐 סביר','😊 טוב','💪 מעולה'];
 function renderRunH(){
-  var runs=lsJ('runs')||[],el=document.getElementById('hist-r');if(!el)return;
-  if(!runs.length){el.innerHTML='<div class="empty">\u05e2\u05d3\u05d9\u05d9\u05df \u05d0\u05d9\u05df \u05e8\u05d9\u05e6\u05d5\u05ea</div>';return;}
+  var runs=lsJ('runs')||[], el=document.getElementById('hist-r'); if(!el) return;
+  if(!runs.length){ el.innerHTML='<div class="empty">עדיין אין ריצות</div>'; return; }
   var out='';
   for(var i=0;i<runs.length;i++){
-    var r=runs[i],dt=new Date(r.date),ds=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
-    out+='<div class="runcard"><div class="runhd"><span class="hwdt">&#x1F3C3; '+ds+'</span><div class="hwac"><button class="hwbtn" onclick="delRun('+i+')">&#x1F5D1;</button></div></div><div class="runbd">';
-    out+='<div class="runsts"><div class="runst"><div class="rsv">'+(r.dist||'&mdash;')+'</div><div class="rsl">\u05e7"\u05de</div></div><div class="runst"><div class="rsv">'+(r.time||'&mdash;')+'</div><div class="rsl">\u05d3\u05e7\u05d5\u05ea</div></div><div class="runst"><div class="rsv">'+(r.pace||'&mdash;')+'</div><div class="rsl">\u05d8\u05de\u05e4\u05d5</div></div></div>';
-    if(r.interval&&r.interval!=='other') out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">&#x1F503; '+r.interval.replace('/',' / ')+'</div>';
-    if(r.hr) out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">&#x2764; '+r.hr+' bpm</div>';
+    var r=runs[i], dt=new Date(r.date), ds=DAYS[dt.getDay()]+', '+dt.getDate()+' '+MONTHS[dt.getMonth()]+' '+dt.getFullYear();
+    out+='<div class="runcard"><div class="runhd"><span class="hwdt">🏃 '+ds+'</span><div class="hwac"><button class="hwbtn" onclick="delRun('+i+')">🗑</button></div></div><div class="runbd">';
+    out+='<div class="runsts"><div class="runst"><div class="rsv">'+(r.dist||'—')+'</div><div class="rsl">ק"מ</div></div><div class="runst"><div class="rsv">'+(r.time||'—')+'</div><div class="rsl">דקות</div></div><div class="runst"><div class="rsv">'+(r.pace||'—')+'</div><div class="rsl">קצב</div></div></div>';
+    if(r.interval&&r.interval!=='other') out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">🔄 '+r.interval.replace('/',' / ')+'</div>';
+    if(r.hr) out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">❤ '+r.hr+' bpm</div>';
     if(r.feel) out+='<div style="font-size:.74rem;color:var(--muted);margin-bottom:4px">'+FEEL[r.feel]+'</div>';
     if(r.notes) out+='<div style="font-size:.74rem;color:#4a5568;background:#f8fafc;padding:6px 8px;border-radius:6px">'+r.notes+'</div>';
     out+='</div></div>';
@@ -1222,128 +1100,125 @@ function renderRunH(){
 }
 
 /* ===== ATTENDANCE ===== */
-function getAttData(){return lsJ('att2')||{};}
-function saveAttData(d){lsSJ('att2',d);}
-function isRestDay(ds,data){
-  var d=new Date(ds);d.setHours(0,0,0,0);
-  var prev=new Date(d-86400000);
-  var pk=prev.getFullYear()+'-'+String(prev.getMonth()+1).padStart(2,'0')+'-'+String(prev.getDate()).padStart(2,'0');
-  var pv=data[pk];
-  return pv==='strength'||pv==='run';
+function getAttD(){ return lsJ('att2')||{}; }
+function saveAttD(d){ lsSJ('att2',d); }
+function isRest(ds,data){
+  var d=new Date(ds); d.setHours(0,0,0,0);
+  var p=new Date(d-86400000);
+  var pk=p.getFullYear()+'-'+String(p.getMonth()+1).padStart(2,'0')+'-'+String(p.getDate()).padStart(2,'0');
+  return data[pk]==='S'||data[pk]==='R';
 }
-function attAction(ds){
-  var data=getAttData();
-  var today=new Date();today.setHours(0,0,0,0);
-  var d=new Date(ds);d.setHours(0,0,0,0);
-  if(d>today||isRestDay(ds,data))return;
-  var cur=data[ds];
-  if(!cur)data[ds]='strength';
-  else if(cur==='strength')data[ds]='run';
-  else if(cur==='run')data[ds]='missed';
+function attTap(ds){
+  var data=getAttD();
+  var today=new Date(); today.setHours(0,0,0,0);
+  var d=new Date(ds); d.setHours(0,0,0,0);
+  if(d>today||isRest(ds,data)) return;
+  var c=data[ds];
+  if(!c) data[ds]='S';
+  else if(c==='S') data[ds]='R';
+  else if(c==='R') data[ds]='X';
   else delete data[ds];
-  saveAttData(data);renderAtt();
+  saveAttD(data); renderAtt();
 }
 function renderAtt(){
-  var cont=document.getElementById('att-cont');
-  if(!cont)return;
-  var data=getAttData();
-  var today=new Date();today.setHours(0,0,0,0);
-  var MTHS=['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  var cont=document.getElementById('att-cont'); if(!cont) return;
+  var data=getAttD();
+  var today=new Date(); today.setHours(0,0,0,0);
+  var DL=['א','ב','ג','ד','ה','ו','ש'];
   var out='';
   for(var m=0;m<3;m++){
-    var yr=new Date(today.getFullYear(),today.getMonth()+m,1).getFullYear();
-    var mo=new Date(today.getFullYear(),today.getMonth()+m,1).getMonth();
-    var dim=new Date(yr,mo+1,0).getDate(),sdow=new Date(yr,mo,1).getDay();
-    var total=0,done=0;
-    for(var d=1;d<=dim;d++){
-      var dd=new Date(yr,mo,d);dd.setHours(0,0,0,0);
-      var key=yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
-      if(dd<=today&&!isRestDay(key,data)){total++;if(data[key]==='strength'||data[key]==='run')done++;}
+    var base=new Date(today.getFullYear(),today.getMonth()+m,1);
+    var yr=base.getFullYear(), mo=base.getMonth();
+    var dim=new Date(yr,mo+1,0).getDate(), sdow=new Date(yr,mo,1).getDay();
+    var tot=0, dn=0;
+    for(var dd=1;dd<=dim;dd++){
+      var dt=new Date(yr,mo,dd); dt.setHours(0,0,0,0);
+      var kk=yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(dd).padStart(2,'0');
+      if(dt<=today&&!isRest(kk,data)){ tot++; if(data[kk]==='S'||data[kk]==='R') dn++; }
     }
-    var pct=total>0?Math.round(done/total*100):0;
-    out+='<div class="att-month"><div class="att-mhdr"><span class="att-mtit">'+MTHS[mo]+' '+yr+'</span><span class="att-mst">'+done+'/'+total+' | '+pct+'%</span></div>';
+    var pct=tot>0?Math.round(dn/tot*100):0;
+    out+='<div style="background:white;border-radius:12px;padding:12px;margin-bottom:12px;box-shadow:0 1px 4px rgba(0,0,0,.07)">';
+    out+='<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px"><span style="font-size:.85rem;font-weight:700">'+MONTHS[mo]+' '+yr+'</span><span style="font-size:.72rem;color:var(--muted)">'+dn+'/'+tot+' | '+pct+'%</span></div>';
     out+='<table style="width:100%;border-collapse:collapse;table-layout:fixed"><thead><tr>';
-    var dl=['א','ב','ג','ד','ה','ו','ש'];
-    for(var h=0;h<7;h++)out+='<th style="font-size:.6rem;font-weight:700;color:#8fa8c0;text-align:center;padding:3px 0;border:none;background:none">'+dl[h]+'</th>';
+    for(var h=0;h<7;h++) out+='<th style="font-size:.6rem;font-weight:700;color:#8fa8c0;text-align:center;padding:3px 0;border:none;background:none">'+DL[h]+'</th>';
     out+='</tr></thead><tbody><tr>';
     var col=0;
-    for(var e=0;e<sdow;e++){out+='<td style="height:42px"></td>';col++;}
+    for(var e=0;e<sdow;e++){ out+='<td style="height:42px"></td>'; col++; }
     for(var d2=1;d2<=dim;d2++){
-      if(col>0&&col%7===0)out+='</tr><tr>';
-      var dd2=new Date(yr,mo,d2);dd2.setHours(0,0,0,0);
+      if(col>0&&col%7===0) out+='</tr><tr>';
+      var dt2=new Date(yr,mo,d2); dt2.setHours(0,0,0,0);
       var k2=yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(d2).padStart(2,'0');
-      var v=data[k2],isFut=dd2>today,isTod=dd2.getTime()===today.getTime(),isR=isRestDay(k2,data);
-      var bg,brd='1px solid transparent',cur='default',ico='';
-      if(isR){bg='#f0f4f8';ico='&#x1F634;';}
-      else if(isFut){bg='#f8fafc';}
-      else if(v==='strength'){bg='#e8f0fa';brd='1px solid #aed6f1';ico='&#x1F3CB;';cur='pointer';}
-      else if(v==='run'){bg='#e8f4f0';brd='1px solid #a9dfbf';ico='&#x1F3C3;';cur='pointer';}
-      else if(v==='missed'){bg='#fef0f0';brd='1px solid #f5c0c0';ico='&#x274C;';cur='pointer';}
-      else{bg='#fff8e8';brd='1px solid #f0c890';ico='&#x2795;';cur='pointer';}
+      var v=data[k2], isFut=dt2>today, isTod=dt2.getTime()===today.getTime(), isR=isRest(k2,data);
+      var bg,brd='1px solid transparent',cur2='default',ico='';
+      if(isR)       { bg='#f0f4f8'; ico='😴'; }
+      else if(isFut){ bg='#f8fafc'; }
+      else if(v==='S'){ bg='#e8f0fa'; brd='1px solid #aed6f1'; ico='🏋'; cur2='pointer'; }
+      else if(v==='R'){ bg='#e8f4f0'; brd='1px solid #a9dfbf'; ico='🏃'; cur2='pointer'; }
+      else if(v==='X'){ bg='#fef0f0'; brd='1px solid #f5c0c0'; ico='❌'; cur2='pointer'; }
+      else            { bg='#fff8e8'; brd='1px solid #f0c890'; ico='➕'; cur2='pointer'; }
       var ol=isTod?';outline:2px solid #e8a020;outline-offset:-1px':'';
-      var oc=(!isFut&&!isR)?' onclick="attAction(''+k2+'')"':'';
-      out+='<td'+oc+' style="text-align:center;vertical-align:middle;height:42px;border-radius:6px;background:'+bg+';border:'+brd+';cursor:'+cur+ol+';padding:1px 0">';
-      out+='<div style="font-size:.62rem;font-weight:800;line-height:1.3">'+d2+'</div><div style="font-size:.75rem;line-height:1">'+ico+'</div></td>';
+      var oc=(!isFut&&!isR)?' onclick="attTap(\''+k2+'\')"':'';
+      out+='<td'+oc+' style="text-align:center;vertical-align:middle;height:42px;border-radius:6px;background:'+bg+';border:'+brd+';cursor:'+cur2+ol+';padding:1px 0">';
+      out+='<div style="font-size:.62rem;font-weight:800;line-height:1.3">'+d2+'</div>';
+      out+='<div style="font-size:.75rem;line-height:1">'+ico+'</div></td>';
       col++;
     }
-    while(col%7!==0){out+='<td style="height:42px"></td>';col++;}
+    while(col%7!==0){ out+='<td style="height:42px"></td>'; col++; }
     out+='</tr></tbody></table></div>';
   }
   cont.innerHTML=out;
 }
 
-/* ===== PWA INSTALL BANNER ===== */
-var deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  deferredPrompt = e;
-  var banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'flex';
-});
-
-function installApp() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(r) {
-      deferredPrompt = null;
-      var banner = document.getElementById('install-banner');
-      if (banner) banner.style.display = 'none';
-    });
-  }
-}
-
-window.addEventListener('appinstalled', function() {
-  var banner = document.getElementById('install-banner');
-  if (banner) banner.style.display = 'none';
-});
-
 /* ===== WAKE LOCK ===== */
 var _wl=null;
+document.addEventListener('visibilitychange',function(){
+  if(_wl&&document.visibilityState==='visible'){
+    navigator.wakeLock.request('screen').then(function(wl){
+      _wl=wl;
+      wl.addEventListener('release',function(){
+        _wl=null;
+        var btn=document.getElementById('wake-btn'), icon=document.getElementById('wake-icon');
+        if(btn){ btn.style.background='rgba(255,255,255,.08)'; btn.style.borderColor='rgba(255,255,255,.15)'; btn.style.color='#8fa8c0'; }
+        if(icon) icon.innerHTML='📵';
+      });
+    }).catch(function(){});
+  }
+});
 function toggleWake(){
-  var btn=document.getElementById('wake-btn'),icon=document.getElementById('wake-icon');
-  if(_wl){_wl.release().catch(function(){});return;}
-  if(!('wakeLock' in navigator)){alert('לא נתמך');return;}
+  var btn=document.getElementById('wake-btn'), icon=document.getElementById('wake-icon');
+  if(_wl){ _wl.release().catch(function(){}); return; }
+  if(!('wakeLock' in navigator)){ alert('לא נתמך בדפדפן זה'); return; }
   navigator.wakeLock.request('screen').then(function(wl){
     _wl=wl;
-    if(btn){btn.style.background='rgba(29,158,117,.3)';btn.style.borderColor='#1D9E75';btn.style.color='#5dd9a8';}
-    if(icon)icon.innerHTML='&#x1F7E2;';
+    if(btn){ btn.style.background='rgba(29,158,117,.3)'; btn.style.borderColor='#1D9E75'; btn.style.color='#5dd9a8'; }
+    if(icon) icon.innerHTML='🟢';
     wl.addEventListener('release',function(){
       _wl=null;
-      if(btn){btn.style.background='rgba(255,255,255,.08)';btn.style.borderColor='rgba(255,255,255,.15)';btn.style.color='#8fa8c0';}
-      if(icon)icon.innerHTML='&#x1F4F5;';
+      if(btn){ btn.style.background='rgba(255,255,255,.08)'; btn.style.borderColor='rgba(255,255,255,.15)'; btn.style.color='#8fa8c0'; }
+      if(icon) icon.innerHTML='📵';
     });
-  }).catch(function(e){alert('שגיאה: '+e.message);});
+  }).catch(function(e){ alert('שגיאה: '+e.message); });
 }
+
+/* ===== PWA ===== */
+var deferredPrompt=null;
+window.addEventListener('beforeinstallprompt',function(e){
+  e.preventDefault(); deferredPrompt=e;
+  var banner=document.getElementById('install-banner'); if(banner) banner.style.display='flex';
+});
+function installApp(){
+  if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt=null; var b=document.getElementById('install-banner'); if(b) b.style.display='none'; }); }
+}
+window.addEventListener('appinstalled',function(){ var b=document.getElementById('install-banner'); if(b) b.style.display='none'; });
+
+/* ===== INIT ===== */
+window.addEventListener('load',function(){
+  var prog=lsJ('wp')||{};
+  for(var id in prog) if(prog[id]){ var el=document.getElementById(id); if(el) el.classList.add('done'); }
+  renderAtt();
+  wtInit();
+  showDailyTip();
+});
 </script>
-<div id="install-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0d1b2a;border-top:2px solid #1D9E75;padding:12px 16px;align-items:center;justify-content:space-between;z-index:9999;max-width:480px;margin:0 auto">
-  <div>
-    <div style="font-size:.8rem;font-weight:800;color:white">&#x1F4AA; התקן כאפליקציה</div>
-    <div style="font-size:.68rem;color:#8fa8c0;margin-top:2px">גישה מהירה מהמסך הראשי</div>
-  </div>
-  <div style="display:flex;gap:8px">
-    <button onclick="document.getElementById('install-banner').style.display='none'" style="padding:8px 12px;border:1px solid #2a4a6e;border-radius:8px;background:transparent;color:#8fa8c0;font-family:'Heebo',sans-serif;font-size:.76rem;cursor:pointer">לא עכשיו</button>
-    <button onclick="installApp()" style="padding:8px 14px;border:none;border-radius:8px;background:#1D9E75;color:white;font-family:'Heebo',sans-serif;font-size:.76rem;font-weight:700;cursor:pointer">&#x2B07; התקן</button>
-  </div>
-</div>
 </body>
 </html>
