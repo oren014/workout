@@ -1,16 +1,31 @@
 {
+  "id": "/workout/",
   "name": "Workout",
   "short_name": "Workout",
   "start_url": "/workout/index.html",
+  "scope": "/workout/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0d1b2a",
   "theme_color": "#0d1b2a",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "/workout/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/workout/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/workout/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
